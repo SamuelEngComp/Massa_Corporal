@@ -94,6 +94,7 @@ fun ScreenHome(navController: NavHostController){
                             Column {
                                 Text(text = " 34 ", style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold)
+                                Text(text = " 20/02/2023 ", style = MaterialTheme.typography.caption)
                             }
                             Column{
                                 Text(text = " IMC ", style = MaterialTheme.typography.h2,
@@ -140,6 +141,7 @@ fun ScreenHome(navController: NavHostController){
                                     text = " 21 ",
                                     style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold)
+                                Text(text = " 20/02/2023 ", style = MaterialTheme.typography.caption)
                             }
                         }
                     }
