@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.navigation.Screens
@@ -91,12 +92,12 @@ fun ScreenHome(navController: NavHostController){
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            Column {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(text = " 34 ", style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold)
                                 Text(text = " 20/02/2023 ", style = MaterialTheme.typography.caption)
                             }
-                            Column{
+                            Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(text = " IMC ", style = MaterialTheme.typography.h2,
                                     modifier = Modifier
                                         .background(
@@ -125,7 +126,7 @@ fun ScreenHome(navController: NavHostController){
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            Column {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IAC ",
                                     style = MaterialTheme.typography.h2,
@@ -136,7 +137,7 @@ fun ScreenHome(navController: NavHostController){
                                         .padding(10.dp)
                                 )
                             }
-                            Column{
+                            Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " 21 ",
                                     style = MaterialTheme.typography.h2,
@@ -177,7 +178,7 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "IMC", style = MaterialTheme.typography.caption)
+                            text = "IMC", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
 
                     }
 
@@ -202,7 +203,7 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),text = "IAC",
-                            style = MaterialTheme.typography.caption)
+                            style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -226,7 +227,7 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "INFO", style = MaterialTheme.typography.caption)
+                            text = "INFO", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -250,7 +251,7 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "CONFIG", style = MaterialTheme.typography.caption)
+                            text = "CONFIG", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
                     }
                 }
             }
