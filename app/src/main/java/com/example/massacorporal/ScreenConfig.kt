@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.components.Nomes
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 
@@ -129,7 +130,13 @@ fun ScreenConfig(navController: NavHostController){
                                 onClick = {
                                     //CircularProgressIndicator()
                                     controllerTecladoConfig?.hide()
-
+                                    Nomes.nome = primeiroNome
+                                    Nomes.sobrenome = ultimoNome
+                                    navController.navigate(Screens.ScreenHome.route){
+                                        popUpTo(Screens.ScreenHome.route){
+                                            inclusive = true
+                                        }
+                                    }
                                           },
                                 shape = CircleShape
                             ) {

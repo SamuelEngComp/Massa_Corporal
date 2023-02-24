@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.components.Nomes
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 
@@ -26,7 +27,8 @@ import com.example.massacorporal.ui.theme.AzulNeve
 fun ScreenHome(navController: NavHostController){
 
     val saudacao = "Olá, "
-    val usuarioFulano = "Fulano de Tal"
+    val usuarioFulano = Nomes.nome + " " + Nomes.sobrenome
+
 
     Column(
            modifier = Modifier
