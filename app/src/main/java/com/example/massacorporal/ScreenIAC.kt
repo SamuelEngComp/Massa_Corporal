@@ -1,5 +1,7 @@
 package com.example.massacorporal
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,11 +26,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.components.Datas
+import com.example.massacorporal.components.Indices
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.pow
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenIAC(navController: NavHostController){
@@ -40,8 +48,11 @@ fun ScreenIAC(navController: NavHostController){
 
     var larguraDoQuadril: Float
     var alturaUsuario: Float
-    var resultadoIacHomem: Float
+    var resultadoIacHomem by remember { mutableStateOf(0.00f) }
     var resultadoIacMulher: Float
+
+    val timestampIAC = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"))
+        .format(DateTimeFormatter.ofPattern("dd/MM/yyy"))
 
     val controllerTeclado = LocalSoftwareKeyboardController.current
 
@@ -197,7 +208,17 @@ fun ScreenIAC(navController: NavHostController){
                             }
 
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+
+                                    Indices.iac = String.format("%.2f", resultadoIacHomem)
+                                    Datas.dataIAC = timestampIAC
+                                    navController.navigate(Screens.ScreenHome.route){
+                                        popUpTo(Screens.ScreenHome.route){
+                                            inclusive = true
+                                        }
+                                    }
+
+                                          },
                                 shape = CircleShape
                             ) {
                                 Text(text = "Salvar")

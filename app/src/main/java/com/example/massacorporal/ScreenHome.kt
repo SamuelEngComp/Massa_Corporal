@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.components.Datas
+import com.example.massacorporal.components.Indices
 import com.example.massacorporal.components.Nomes
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
@@ -26,8 +28,11 @@ import com.example.massacorporal.ui.theme.AzulNeve
 @Composable
 fun ScreenHome(navController: NavHostController){
 
-    val saudacao = "Olá, "
+    val saudacao = "Olá "
     val usuarioFulano = Nomes.nome + " " + Nomes.sobrenome
+
+    val indiceIMC = Indices.imc
+    val indiceIAC = Indices.iac
 
 
     Column(
@@ -60,20 +65,27 @@ fun ScreenHome(navController: NavHostController){
                     }
 
                     Column(modifier = Modifier.padding(10.dp)) {
-                        Box(modifier = Modifier
-                            .border(width = 2.dp, color = Color.White,
-                                shape = CircleShape)
-                        ) {
+                        Box() {
+
                             Image(
-                                painter = painterResource(id = R.drawable.person_24),
-                                contentDescription = "Imagem Perfil",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .background(color = Color.Transparent)
-                                    .size(100.dp)
-                                    .clip(CircleShape),
-                                colorFilter = ColorFilter.tint(color = AzulNeve)
+                                    painter = painterResource(id = R.drawable.person_24),
+                                    contentDescription = "Imagem Perfil",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .background(color = Color.Transparent)
+                                        .size(100.dp)
+                                        .clip(CircleShape),
+                                    colorFilter = ColorFilter.tint(color = AzulNeve)
                             )
+
+                            Icon(
+                                painter = painterResource(id = R.drawable.camera),
+                                contentDescription = "Icone camera perfil",
+                                modifier = Modifier
+                                    .align(alignment = Alignment.BottomStart)
+                            )
+
+
                         }
                     }
                 }
@@ -95,16 +107,17 @@ fun ScreenHome(navController: NavHostController){
                             modifier = Modifier.padding(10.dp)
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(text = " 34 ", style = MaterialTheme.typography.h2,
+                                Text(text = " $indiceIMC ", style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold)
-                                Text(text = " 20/02/2023 ", style = MaterialTheme.typography.caption)
+                                Text(text = " ${Datas.dataIMC} ", style = MaterialTheme.typography.caption)
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(text = " IMC ", style = MaterialTheme.typography.h2,
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
-                                            shape = CircleShape)
+                                            shape = CircleShape
+                                        )
                                         .padding(10.dp)
                                 )
                             }
@@ -135,16 +148,17 @@ fun ScreenHome(navController: NavHostController){
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
-                                            shape = CircleShape)
+                                            shape = CircleShape
+                                        )
                                         .padding(10.dp)
                                 )
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
-                                    text = " 21 ",
+                                    text = " $indiceIAC ",
                                     style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold)
-                                Text(text = " 20/02/2023 ", style = MaterialTheme.typography.caption)
+                                Text(text = " ${Datas.dataIAC} ", style = MaterialTheme.typography.caption)
                             }
                         }
                     }

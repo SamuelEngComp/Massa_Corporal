@@ -72,7 +72,7 @@ fun Splash(alpha: Float){
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo",
                 modifier = Modifier
-                    .size(250.dp)
+                    .size(100.dp)
                     .alpha(alpha = alpha),
                 colorFilter = ColorFilter.tint(
                     color = AzulNeve
@@ -83,7 +83,7 @@ fun Splash(alpha: Float){
                     .padding(20.dp)
                     .alpha(alpha = alpha),
                 text = "Massa Corporal",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.h6,
                 color = AzulNeve
             )
         }

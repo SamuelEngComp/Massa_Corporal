@@ -2,6 +2,8 @@ package com.example.massacorporal
 
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -32,12 +34,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
+import com.example.massacorporal.components.Datas
+import com.example.massacorporal.components.Indices
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 import kotlinx.coroutines.delay
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenImc(navController: NavHostController){
@@ -48,6 +56,11 @@ fun ScreenImc(navController: NavHostController){
     var alturaDaPessoa: Float
     var pesoDaPessoa: Float
     var resultadoIMC by remember { mutableStateOf(0.00f) }
+
+
+    val timestampIMC = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"))
+        .format(DateTimeFormatter.ofPattern("dd/MM/yyy"))
+
 
     val controllerTeclado = LocalSoftwareKeyboardController.current
 
@@ -169,7 +182,14 @@ fun ScreenImc(navController: NavHostController){
                     }
 
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            Indices.imc = String.format("%.2f", resultadoIMC)
+                            Datas.dataIMC = timestampIMC
+                            navController.navigate(Screens.ScreenHome.route){
+                                popUpTo(Screens.ScreenHome.route){
+                                    inclusive = true
+                                }
+                            } },
                         shape = CircleShape
                     ) {
                         Text(text = "Salvar")
@@ -182,7 +202,7 @@ fun ScreenImc(navController: NavHostController){
                     pesoDaPessoa = pesoPessoa.toFloat() / 100
                     resultadoIMC = (pesoDaPessoa / (alturaDaPessoa * alturaDaPessoa))
 
-                    val res = resultadoIMC.toString().format("%.2f")
+                    val res = String.format("%.2f", resultadoIMC)
 
                     Text(text = res)
                     CalculoImc(resultadoIMC)
