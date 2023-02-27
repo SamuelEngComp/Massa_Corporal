@@ -14,13 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
 import com.example.massacorporal.components.Indices
-import com.example.massacorporal.components.Nomes
+
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 
@@ -28,8 +29,9 @@ import com.example.massacorporal.ui.theme.AzulNeve
 @Composable
 fun ScreenHome(navController: NavHostController){
 
-    val saudacao = "Olá "
-    val usuarioFulano = Nomes.nome + " " + Nomes.sobrenome
+    val bemVindo = "Bem-Vindo"
+    val cuidarSaude = "Cuide da Saúde"
+    val monitorarIndices = "Monitore os Índices"
 
     val indiceIMC = Indices.imc
     val indiceIAC = Indices.iac
@@ -56,37 +58,34 @@ fun ScreenHome(navController: NavHostController){
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Text(text = saudacao,
-                            style = MaterialTheme.typography.subtitle1)
-                        Text(text = usuarioFulano,
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold)
-                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(10.dp),
+                            fontFamily = FontFamily.Serif,
+                            text = bemVindo,
+                            style = MaterialTheme.typography.subtitle2)
 
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Box() {
+                        Text(
+                            text = cuidarSaude,
+                            fontFamily = FontFamily.Serif,
+                            style = MaterialTheme.typography.h4,
+                            fontWeight = FontWeight.Bold,
+                            color = AzulNeve
+                        )
 
-                            Image(
-                                    painter = painterResource(id = R.drawable.person_24),
-                                    contentDescription = "Imagem Perfil",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .background(color = Color.Transparent)
-                                        .size(100.dp)
-                                        .clip(CircleShape),
-                                    colorFilter = ColorFilter.tint(color = AzulNeve)
-                            )
+                        Text(
+                            text = monitorarIndices,
+                            fontFamily = FontFamily.Serif,
+                            style = MaterialTheme.typography.h4,
+                            fontWeight = FontWeight.Bold,
+                            color = AzulNeve)
 
-                            Icon(
-                                painter = painterResource(id = R.drawable.camera),
-                                contentDescription = "Icone camera perfil",
-                                modifier = Modifier
-                                    .align(alignment = Alignment.BottomStart)
-                            )
-
-
-                        }
                     }
                 }
 
@@ -106,13 +105,30 @@ fun ScreenHome(navController: NavHostController){
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(text = " $indiceIMC ", style = MaterialTheme.typography.h2,
-                                    fontWeight = FontWeight.Bold)
-                                Text(text = " ${Datas.dataIMC} ", style = MaterialTheme.typography.caption)
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+
+                                CalculoImc(resultadoIMC = indiceIMC.toFloat())
+
+                                Text(
+                                    text = " $indiceIMC ",
+                                    style = MaterialTheme.typography.h2,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily.Serif
+                                )
+                                Text(
+                                    text = " ${Datas.dataIMC} ",
+                                    style = MaterialTheme.typography.caption
+                                )
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
-                                Text(text = " IMC ", style = MaterialTheme.typography.h2,
+                                Text(
+                                    text = " IMC ",
+                                    fontFamily = FontFamily.Serif,
+                                    style = MaterialTheme.typography.h2,
+                                    fontWeight = FontWeight.Bold,
+                                    color = AzulNeve,
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
@@ -145,6 +161,9 @@ fun ScreenHome(navController: NavHostController){
                                 Text(
                                     text = " IAC ",
                                     style = MaterialTheme.typography.h2,
+                                    fontWeight = FontWeight.Bold,
+                                    color = AzulNeve,
+                                    fontFamily = FontFamily.Serif,
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
@@ -157,7 +176,7 @@ fun ScreenHome(navController: NavHostController){
                                 Text(
                                     text = " $indiceIAC ",
                                     style = MaterialTheme.typography.h2,
-                                    fontWeight = FontWeight.Bold)
+                                    fontWeight = FontWeight.Bold,fontFamily = FontFamily.Serif)
                                 Text(text = " ${Datas.dataIAC} ", style = MaterialTheme.typography.caption)
                             }
                         }
@@ -193,8 +212,10 @@ fun ScreenHome(navController: NavHostController){
                                 tint = AzulNeve
                             )
                         }
-                        Text(modifier = Modifier.padding(10.dp),
-                            text = "IMC", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
+                        Text(
+                            modifier = Modifier.padding(10.dp),
+                            text = "IMC", style = MaterialTheme.typography.caption,
+                            fontWeight = FontWeight.Bold,fontFamily = FontFamily.Serif)
 
                     }
 
@@ -218,8 +239,12 @@ fun ScreenHome(navController: NavHostController){
                                 tint = AzulNeve
                             )
                         }
-                        Text(modifier = Modifier.padding(10.dp),text = "IAC",
-                            style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
+                        Text(
+                            modifier = Modifier.padding(10.dp),
+                            text = "IAC",
+                            style = MaterialTheme.typography.caption,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Serif)
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -242,8 +267,11 @@ fun ScreenHome(navController: NavHostController){
                                 tint = AzulNeve
                             )
                         }
-                        Text(modifier = Modifier.padding(10.dp),
-                            text = "INFO", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
+                        Text(
+                            modifier = Modifier.padding(10.dp),
+                            text = "INFO", style = MaterialTheme.typography.caption,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Serif)
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -267,7 +295,9 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "CONFIG", style = MaterialTheme.typography.caption, fontWeight = FontWeight.Bold)
+                            text = "CONFIG", style = MaterialTheme.typography.caption,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Serif)
                     }
                 }
             }

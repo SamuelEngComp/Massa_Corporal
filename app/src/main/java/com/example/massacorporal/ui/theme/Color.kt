@@ -9,4 +9,4 @@ val Teal200 = Color(0xFF03DAC5)
 val VerdeClaro = Color(0x5196EC31)
 
 val BrancoNeve = Color(0xFFDEDEDE)
-val AzulNeve = Color(0xFF3FAAFD)
+val AzulNeve = Color(0xFF8EC2EB)

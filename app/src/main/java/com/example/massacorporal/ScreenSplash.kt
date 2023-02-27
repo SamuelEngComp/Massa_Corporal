@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.navigation.Screens
@@ -84,7 +85,8 @@ fun Splash(alpha: Float){
                     .alpha(alpha = alpha),
                 text = "Massa Corporal",
                 style = MaterialTheme.typography.h6,
-                color = AzulNeve
+                color = AzulNeve,
+                fontFamily = FontFamily.Serif
             )
         }
     }
