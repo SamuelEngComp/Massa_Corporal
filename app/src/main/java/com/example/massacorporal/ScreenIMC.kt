@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
 import com.example.massacorporal.components.Indices
+import com.example.massacorporal.components.ResultadosImc
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 import kotlinx.coroutines.delay
@@ -134,7 +135,7 @@ fun ScreenImc(navController: NavHostController){
                         .padding(10.dp),
                     value = pesoPessoa,
                     onValueChange = {
-                        if (it.length <= 4 && !it.startsWith("0")) {
+                        if (it.length <= 5 && !it.startsWith("0")) {
                             pesoPessoa = it
                         }
                     },
@@ -245,35 +246,16 @@ fun ScreenImc(navController: NavHostController){
 }
 
 @Composable
-fun CalculoImc(resultadoIMC: Float): String {
+fun CalculoImc(resultadoIMC: Float) {
 
-    var resultado = ""
-
-    if (resultadoIMC <= 18.5f){
-        resultado = "Abaixo do peso"
-        Text(text = resultado)
+    when(resultadoIMC){
+        in 0.0f .. 18.5f -> Text(text = "${ResultadosImc.ABAIXO_DO_PESO}")
+        in 18.6f .. 24.9f -> Text(text = "${ResultadosImc.NORMAL}")
+        in 25.0f .. 29.9f -> Text(text = "${ResultadosImc.SOBREPESO}")
+        in 30.0f .. 34.9f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_1}")
+        in 35.0f .. 39.9f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_2}")
+        in 40.0f .. 1000.5f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_3}")
     }
-    else if(resultadoIMC > 18.5 && resultadoIMC <= 24.9 ){
-        resultado = "Peso normal"
-        Text(text = resultado)
-    }
-    else if(resultadoIMC > 24.9 && resultadoIMC <= 29.9 ){
-        resultado = "Sobrepeso"
-        Text(text = resultado)
-    }
-    else if(resultadoIMC > 29.9 && resultadoIMC <= 34.9 ){
-        resultado = "Obesidade grau I"
-        Text(text = resultado)
-    }
-    else if(resultadoIMC > 34.9 && resultadoIMC <= 39.9 ){
-        resultado = "Obesidade grau II"
-        Text(text = resultado)
-    }
-    else if(resultadoIMC >= 40.0){
-        resultado = "Obesidade grau III"
-        Text(text = resultado)
-    }
-    return resultado
 }
 
 
