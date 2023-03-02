@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
+import com.example.massacorporal.components.EstadosIMC
 import com.example.massacorporal.components.Indices
 
 import com.example.massacorporal.navigation.Screens
@@ -33,8 +34,8 @@ fun ScreenHome(navController: NavHostController){
     val cuidarSaude = "Cuide da Saúde"
     val monitorarIndices = "Monitore os Índices"
 
-    val indiceIMC = Indices.imc
-    val indiceIAC = Indices.iac
+    var indiceIMC = Indices.imc
+    var indiceIAC = Indices.iac
 
 
     Column(
@@ -67,24 +68,23 @@ fun ScreenHome(navController: NavHostController){
                     ) {
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            fontFamily = FontFamily.Serif,
                             text = bemVindo,
+                            fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.subtitle2)
 
                         Text(
                             text = cuidarSaude,
-                            fontFamily = FontFamily.Serif,
                             style = MaterialTheme.typography.h4,
                             fontWeight = FontWeight.Bold,
-                            color = AzulNeve
+                            color = MaterialTheme.colors.primary
                         )
 
                         Text(
                             text = monitorarIndices,
-                            fontFamily = FontFamily.Serif,
                             style = MaterialTheme.typography.h4,
                             fontWeight = FontWeight.Bold,
-                            color = AzulNeve)
+                            color = MaterialTheme.colors.primary
+                        )
 
                     }
                 }
@@ -109,13 +109,15 @@ fun ScreenHome(navController: NavHostController){
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                CalculoImc(resultadoIMC = indiceIMC.toFloat())
+                                Text(
+                                    text = " ${EstadosIMC.estadoImc}",
+                                    style = MaterialTheme.typography.caption
+                                )
 
                                 Text(
                                     text = " $indiceIMC ",
                                     style = MaterialTheme.typography.h2,
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = FontFamily.Serif
+                                    fontWeight = FontWeight.Bold
                                 )
                                 Text(
                                     text = " ${Datas.dataIMC} ",
@@ -125,10 +127,9 @@ fun ScreenHome(navController: NavHostController){
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IMC ",
-                                    fontFamily = FontFamily.Serif,
                                     style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold,
-                                    color = AzulNeve,
+                                    color = MaterialTheme.colors.primary,
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
@@ -162,8 +163,7 @@ fun ScreenHome(navController: NavHostController){
                                     text = " IAC ",
                                     style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold,
-                                    color = AzulNeve,
-                                    fontFamily = FontFamily.Serif,
+                                    color = MaterialTheme.colors.primary,
                                     modifier = Modifier
                                         .background(
                                             color = MaterialTheme.colors.background,
@@ -176,7 +176,8 @@ fun ScreenHome(navController: NavHostController){
                                 Text(
                                     text = " $indiceIAC ",
                                     style = MaterialTheme.typography.h2,
-                                    fontWeight = FontWeight.Bold,fontFamily = FontFamily.Serif)
+                                    fontWeight = FontWeight.Bold
+                                )
                                 Text(text = " ${Datas.dataIAC} ", style = MaterialTheme.typography.caption)
                             }
                         }
@@ -209,13 +210,14 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.calculate_24),
                                 contentDescription = "botao imc",
-                                tint = AzulNeve
+                                tint = MaterialTheme.colors.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
                             text = "IMC", style = MaterialTheme.typography.caption,
-                            fontWeight = FontWeight.Bold,fontFamily = FontFamily.Serif)
+                            fontWeight = FontWeight.Bold
+                        )
 
                     }
 
@@ -236,15 +238,15 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.calculate_24),
                                 contentDescription = "botao iac",
-                                tint = AzulNeve
+                                tint = MaterialTheme.colors.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
                             text = "IAC",
                             style = MaterialTheme.typography.caption,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Serif)
+                            fontWeight = FontWeight.Bold
+                        )
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -264,14 +266,14 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.info_24),
                                 contentDescription = "botao info",
-                                tint = AzulNeve
+                                tint = MaterialTheme.colors.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
                             text = "INFO", style = MaterialTheme.typography.caption,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Serif)
+                            fontWeight = FontWeight.Bold
+                        )
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -291,13 +293,13 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.baseline_settings_24),
                                 contentDescription = "botao config",
-                                tint = AzulNeve
+                                tint = MaterialTheme.colors.primary
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
                             text = "CONFIG", style = MaterialTheme.typography.caption,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Serif)
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }

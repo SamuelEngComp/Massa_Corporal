@@ -35,8 +35,9 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
+import com.example.massacorporal.components.EstadosIMC
 import com.example.massacorporal.components.Indices
-import com.example.massacorporal.components.ResultadosImc
+
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 import kotlinx.coroutines.delay
@@ -58,10 +59,8 @@ fun ScreenImc(navController: NavHostController){
     var pesoDaPessoa: Float
     var resultadoIMC by remember { mutableStateOf(0.00f) }
 
-
     val timestampIMC = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"))
         .format(DateTimeFormatter.ofPattern("dd/MM/yyy"))
-
 
     val controllerTeclado = LocalSoftwareKeyboardController.current
 
@@ -106,9 +105,9 @@ fun ScreenImc(navController: NavHostController){
                         .padding(10.dp),
                     value = alturaPessoa,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        cursorColor = AzulNeve,
-                        focusedBorderColor = AzulNeve,
-                        focusedLabelColor = AzulNeve
+                        cursorColor = MaterialTheme.colors.primary,
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        focusedLabelColor = MaterialTheme.colors.primary
                     ),
                     onValueChange = {
                         if (it.length <= 3 && !it.startsWith("0")) {
@@ -164,7 +163,6 @@ fun ScreenImc(navController: NavHostController){
                 ) {
                     Button(
                         onClick = {
-                            //resultadoIMC = (alturaPessoa.toFloat() / (pesoPessoa.toFloat()*pesoPessoa.toFloat()))
                             controllerTeclado?.hide()
                         },
                         shape = CircleShape,
@@ -186,6 +184,7 @@ fun ScreenImc(navController: NavHostController){
                         onClick = {
                             Indices.imc = String.format("%.2f", resultadoIMC)
                             Datas.dataIMC = timestampIMC
+
                             navController.navigate(Screens.ScreenHome.route){
                                 popUpTo(Screens.ScreenHome.route){
                                     inclusive = true
@@ -206,7 +205,7 @@ fun ScreenImc(navController: NavHostController){
                     val res = String.format("%.2f", resultadoIMC)
 
                     Text(text = res)
-                    CalculoImc(resultadoIMC)
+                    Text(text = CalculoImc(resultadoIMC))
                     LoadingAnimation3()
                 }
 
@@ -245,17 +244,41 @@ fun ScreenImc(navController: NavHostController){
     }
 }
 
-@Composable
-fun CalculoImc(resultadoIMC: Float) {
+
+fun CalculoImc(resultadoIMC: Float): String {
+
+    val resultadoPossiveis = listOf("Abaixo do Peso", "Normal", "Sobrepeso", "Obesidade Grau I", "Obesidade Grau II", "Obesidade Grau III")
+    var resultado = ""
 
     when(resultadoIMC){
-        in 0.0f .. 18.5f -> Text(text = "${ResultadosImc.ABAIXO_DO_PESO}")
-        in 18.6f .. 24.9f -> Text(text = "${ResultadosImc.NORMAL}")
-        in 25.0f .. 29.9f -> Text(text = "${ResultadosImc.SOBREPESO}")
-        in 30.0f .. 34.9f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_1}")
-        in 35.0f .. 39.9f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_2}")
-        in 40.0f .. 1000.5f -> Text(text = "${ResultadosImc.OBESIDADE_GRAU_3}")
+        in 0.1f .. 18.5f -> {
+            resultado = resultadoPossiveis[0]
+            EstadosIMC.estadoImc = resultado
+        }
+        in 18.6f .. 24.9f -> {
+            resultado = resultadoPossiveis[1]
+            EstadosIMC.estadoImc = resultado
+        }
+        in 25.0f .. 29.9f -> {
+            resultado = resultadoPossiveis[2]
+            EstadosIMC.estadoImc = resultado
+        }
+        in 30.0f .. 34.9f -> {
+            resultado = resultadoPossiveis[3]
+            EstadosIMC.estadoImc = resultado
+        }
+        in 35.0f .. 39.9f -> {
+            resultado = resultadoPossiveis[4]
+            EstadosIMC.estadoImc = resultado
+        }
+        in 40.0f .. 1000.5f -> {
+            resultado = resultadoPossiveis[5]
+            EstadosIMC.estadoImc = resultado
+        }
+        else -> " "
     }
+
+    return resultado
 }
 
 
@@ -265,7 +288,7 @@ fun CalculoImc(resultadoIMC: Float) {
 
 @Composable
 fun LoadingAnimation3(
-    circleColor: Color = Color(0xFF35898F),
+    circleColor: Color = MaterialTheme.colors.primary,//Color(0xFF35898F),
     circleSize: Dp = 36.dp,
     animationDelay: Int = 400,
     initialAlpha: Float = 0.3f

@@ -76,7 +76,7 @@ fun Splash(alpha: Float){
                     .size(100.dp)
                     .alpha(alpha = alpha),
                 colorFilter = ColorFilter.tint(
-                    color = AzulNeve
+                    color = MaterialTheme.colors.primary
                 )
             )
             Text(
@@ -85,8 +85,7 @@ fun Splash(alpha: Float){
                     .alpha(alpha = alpha),
                 text = "Massa Corporal",
                 style = MaterialTheme.typography.h6,
-                color = AzulNeve,
-                fontFamily = FontFamily.Serif
+                color = MaterialTheme.colors.primary
             )
         }
     }

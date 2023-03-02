@@ -6,7 +6,7 @@ package com.example.massacorporal.components
  */
 object Indices {
 
-    var imc = "0"
-    var iac = "0"
+    var imc = "0.0"
+    var iac = "0.0"
 
 }

@@ -81,9 +81,9 @@ fun ScreenConfig(navController: NavHostController){
                                     .padding(10.dp),
                                 value = primeiroNome,
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    cursorColor = AzulNeve,
-                                    focusedBorderColor = AzulNeve,
-                                    focusedLabelColor = AzulNeve
+                                    cursorColor = MaterialTheme.colors.primary,
+                                    focusedBorderColor = MaterialTheme.colors.primary,
+                                    focusedLabelColor = MaterialTheme.colors.primary
                                 ),
                                 onValueChange = {
                                     primeiroNome = it
@@ -104,9 +104,9 @@ fun ScreenConfig(navController: NavHostController){
                                     .padding(10.dp),
                                 value = ultimoNome,
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    cursorColor = AzulNeve,
-                                    focusedBorderColor = AzulNeve,
-                                    focusedLabelColor = AzulNeve
+                                    cursorColor = MaterialTheme.colors.primary,
+                                    focusedBorderColor = MaterialTheme.colors.primary,
+                                    focusedLabelColor = MaterialTheme.colors.primary
                                 ),
                                 onValueChange = {
                                     ultimoNome = it

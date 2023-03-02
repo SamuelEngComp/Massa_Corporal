@@ -112,7 +112,7 @@ fun ScreenIAC(navController: NavHostController){
                                         sexoUsuario = "masculino"
                                      },
                                     colors = RadioButtonDefaults.colors(
-                                        selectedColor = AzulNeve
+                                        selectedColor = MaterialTheme.colors.primary
                                     )
                                 )
                             }
@@ -131,7 +131,7 @@ fun ScreenIAC(navController: NavHostController){
                                         sexoUsuario = "feminino"
                                     },
                                     colors = RadioButtonDefaults.colors(
-                                        selectedColor = AzulNeve
+                                        selectedColor = MaterialTheme.colors.primary
                                     )
                                 )
                             }
@@ -143,9 +143,9 @@ fun ScreenIAC(navController: NavHostController){
                                 .padding(10.dp),
                             value = larguraQuadril,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                cursorColor = AzulNeve,
-                                focusedBorderColor = AzulNeve,
-                                focusedLabelColor = AzulNeve
+                                cursorColor = MaterialTheme.colors.primary,
+                                focusedBorderColor = MaterialTheme.colors.primary,
+                                focusedLabelColor = MaterialTheme.colors.primary
                             ),
                             onValueChange = {
                                 if (it.length <= 3 && !it.startsWith("0")){
@@ -271,7 +271,7 @@ fun ScreenIAC(navController: NavHostController){
                                         backgroundColor = Color.White,
                                         modifier = Modifier
                                             .size(width = 100.dp, height = 10.dp)
-                                            .border(width = 2.dp, color = AzulNeve, shape = CircleShape)
+                                            .border(width = 2.dp, color = MaterialTheme.colors.primary, shape = CircleShape)
                                     )
                                 }
                             }
