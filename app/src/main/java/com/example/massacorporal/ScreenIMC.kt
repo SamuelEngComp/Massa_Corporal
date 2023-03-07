@@ -49,6 +49,7 @@ import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
 import com.example.massacorporal.ui.theme.Laranja
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -77,6 +78,9 @@ fun ScreenImc(navController: NavHostController){
         targetValue = resultadoIMC,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
     ).value
+
+
+    val scope = rememberCoroutineScope()
 
 /*
     val agora = Calendar.getInstance()
@@ -187,6 +191,12 @@ fun ScreenImc(navController: NavHostController){
                         onClick = {
                             controllerTeclado?.hide()
                             controleGrafico = true
+
+                            //boa sacada - o grafico fica por 10s e depois some
+                            scope.launch {
+                                delay(10000)
+                                controleGrafico = false
+                            }
                         },
                         shape = CircleShape,
                         enabled = if (
