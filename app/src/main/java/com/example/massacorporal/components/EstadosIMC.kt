@@ -1,8 +1,6 @@
 package com.example.massacorporal.components
 
-object EstadosIMC {
-
+object Estados {
     var estadoImc = ""
-
-
+    var estadoIac = ""
 }

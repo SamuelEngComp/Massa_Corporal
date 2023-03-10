@@ -7,16 +7,22 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.modifier.modifierLocalConsumer
 
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +49,7 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
-import com.example.massacorporal.components.EstadosIMC
+import com.example.massacorporal.components.Estados
 import com.example.massacorporal.components.Indices
 
 import com.example.massacorporal.navigation.Screens
@@ -62,33 +69,41 @@ import kotlin.math.roundToInt
 @Composable
 fun ScreenImc(navController: NavHostController){
 
-    var alturaPessoa by remember { mutableStateOf("") }
-    var pesoPessoa by remember { mutableStateOf("") }
-    var controleGrafico by remember { mutableStateOf(false) }
+    /**
+     * Variaveis utilizadas para capturar o valor digitado nos campos
+     * altura e peso
+     */
+    var alturaPessoa by rememberSaveable { mutableStateOf("") }
+    var pesoPessoa by rememberSaveable { mutableStateOf("") }
 
-    var alturaDaPessoa: Float
-    var pesoDaPessoa: Float
-    var resultadoIMC by remember { mutableStateOf(0.00f) }
 
+    var alturaDaPessoa = 0.0f
+    var pesoDaPessoa = 0.0f
+
+
+    var resultadoIMC by rememberSaveable { mutableStateOf(0.0f) }
+
+
+    /**
+     * Variavel criada para salvar a hora que o usuario clicou no botao salvar
+     */
     val timestampIMC = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"))
         .format(DateTimeFormatter.ofPattern("dd/MM/yyy"))
 
+    //esconder o teclado quando ocorrer o clique em calcular ou salvar
+    val controllerTeclado = LocalSoftwareKeyboardController.current
 
+    /**
+     * Animacao para preencher o grafico com base no valor do IMC
+     */
     val animatedProgress = animateFloatAsState(
-        targetValue = resultadoIMC,
+        targetValue =  resultadoIMC,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
     ).value
 
-
     val scope = rememberCoroutineScope()
 
-/*
-    val agora = Calendar.getInstance()
-    agora.get(Calendar.DAY_OF_MONTH)
-    agora.get(Calendar.MONTH)
-    agora.get(Calendar.YEAR)*/
 
-    val controllerTeclado = LocalSoftwareKeyboardController.current
 
     Scaffold (
         topBar = {
@@ -113,7 +128,8 @@ fun ScreenImc(navController: NavHostController){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -190,27 +206,23 @@ fun ScreenImc(navController: NavHostController){
                     Button(
                         onClick = {
                             controllerTeclado?.hide()
-                            controleGrafico = true
-
-                            //boa sacada - o grafico fica por 10s e depois some
                             scope.launch {
-                                delay(10000)
-                                controleGrafico = false
+                                resultadoIMC = ResultadoDoImc(alturaDaPessoa, pesoDaPessoa)
                             }
                         },
                         shape = CircleShape,
                         enabled = if (
-                            (alturaPessoa.isEmpty() || alturaPessoa.equals("0.00") || alturaPessoa.equals(
-                                ""
-                            )) ||
-                            (pesoPessoa.isEmpty() || pesoPessoa.equals("") || pesoPessoa.equals("0.00"))
+                            (alturaPessoa.isEmpty() || alturaPessoa.equals("0.00") ||
+                                    alturaPessoa.equals("")) ||
+                            (pesoPessoa.isEmpty() || pesoPessoa.equals("") ||
+                                    pesoPessoa.equals("0.00"))
                         ) {
                             false
                         } else {
                             true
                         }
                     ) {
-                        Text(text = "Calcular")
+                        Text(text = " Calcular ")
                     }
 
                     Button(
@@ -223,43 +235,37 @@ fun ScreenImc(navController: NavHostController){
                                     inclusive = true
                                 }
                             } },
+                        enabled = resultadoIMC != 0.0f,
                         shape = CircleShape
                     ) {
-                        Text(text = "Salvar")
+                        Text(text = " Salvar ")
                     }
                 }
 
                 if (alturaPessoa.isNotEmpty() && pesoPessoa.isNotEmpty()) {
-
                     alturaDaPessoa = alturaPessoa.toFloat() / 100
                     pesoDaPessoa = pesoPessoa.toFloat() / 100
-                    resultadoIMC = (pesoDaPessoa / (alturaDaPessoa * alturaDaPessoa))
-
-                    val res = String.format("%.2f", resultadoIMC)
-
-                    //Text(text = res)
-                    //Text(text = CalculoImc(resultadoIMC))
-                    //LoadingAnimation3()
-                    if (controleGrafico){
-                        CustomComponent(
-                            indicatorValue = animatedProgress.toInt(),
-                            maxIndicatorValue = 41,
-                            bigTextSuffix = "IMC",
-                            smallText = CalculoImc(resultadoIMC = animatedProgress),
-                            backgroundIndicatorStrokeWidth = 70f,
-                            foregroundIndicatorStrokeWidth = 70f,
-                            foregroundIndicatorColor = when(animatedProgress){
-                                in 0.1f .. 18.5f -> { MaterialTheme.colors.primary } //magresa
-                                in 18.6f .. 24.9f -> { MaterialTheme.colors.primary } //normal
-                                in 25.0f .. 29.9f -> { Laranja } //sobrepeso
-                                in 30f .. 34.9f -> { Color.Red } //obesidade I
-                                in 35f .. 39.9f -> { Color.Red } //obesidade II
-                                in 40f .. 1000.0f -> { Color.Red } //obesidade III
-                                else -> MaterialTheme.colors.primary
-                            }
-                        )
-                    }
+                }else{
+                    resultadoIMC = 0.0f
                 }
+
+                CustomComponent(
+                    indicatorValue = animatedProgress.toInt(),
+                    maxIndicatorValue = 41,
+                    bigTextSuffix = "IMC",
+                    smallText = CalculoImc(resultadoIMC = animatedProgress),
+                    backgroundIndicatorStrokeWidth = 70f,
+                    foregroundIndicatorStrokeWidth = 70f,
+                    foregroundIndicatorColor = when(animatedProgress){
+                        in 0.1f .. 18.5f -> { MaterialTheme.colors.primary } //magresa
+                        in 18.6f .. 24.9f -> { MaterialTheme.colors.primary } //normal
+                        in 25.0f .. 29.9f -> { Laranja } //sobrepeso
+                        in 30f .. 34.9f -> { Color.Red } //obesidade I
+                        in 35f .. 39.9f -> { Color.Red } //obesidade II
+                        in 40f .. 1000.0f -> { Color.Red } //obesidade III
+                        else -> MaterialTheme.colors.primary
+                    }
+                )
 
                 /**
                  *
@@ -305,32 +311,41 @@ fun CalculoImc(resultadoIMC: Float): String {
     when(resultadoIMC){
         in 0.1f .. 18.5f -> {
             resultado = resultadoPossiveis[0]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         in 18.6f .. 24.9f -> {
             resultado = resultadoPossiveis[1]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         in 25.0f .. 29.9f -> {
             resultado = resultadoPossiveis[2]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         in 30.0f .. 34.9f -> {
             resultado = resultadoPossiveis[3]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         in 35.0f .. 39.9f -> {
             resultado = resultadoPossiveis[4]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         in 40.0f .. 1000.5f -> {
             resultado = resultadoPossiveis[5]
-            EstadosIMC.estadoImc = resultado
+            Estados.estadoImc = resultado
         }
         else -> " "
     }
 
     return resultado
+}
+
+
+fun ResultadoDoImc(altura: Float, peso: Float): Float{
+
+    val resultado = peso / Math.pow(altura.toDouble(), 2.0)
+
+    return resultado.toFloat()
+
 }
 
 

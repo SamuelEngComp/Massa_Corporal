@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
-import com.example.massacorporal.components.EstadosIMC
+import com.example.massacorporal.components.Estados
 import com.example.massacorporal.components.Indices
 
 import com.example.massacorporal.navigation.Screens
@@ -110,7 +110,7 @@ fun ScreenHome(navController: NavHostController){
                             ) {
 
                                 Text(
-                                    text = " ${EstadosIMC.estadoImc}",
+                                    text = " ${Estados.estadoImc}",
                                     style = MaterialTheme.typography.caption
                                 )
 
@@ -173,12 +173,18 @@ fun ScreenHome(navController: NavHostController){
                                 )
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
+
+                                Text(
+                                    text = " ${Estados.estadoIac}",
+                                    style = MaterialTheme.typography.caption
+                                )
                                 Text(
                                     text = " $indiceIAC ",
                                     style = MaterialTheme.typography.h2,
                                     fontWeight = FontWeight.Bold
                                 )
-                                Text(text = " ${Datas.dataIAC} ", style = MaterialTheme.typography.caption)
+                                Text(text = " ${Datas.dataIAC} ",
+                                    style = MaterialTheme.typography.caption)
                             }
                         }
                     }
@@ -215,7 +221,7 @@ fun ScreenHome(navController: NavHostController){
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "IMC", style = MaterialTheme.typography.caption,
+                            text = "Imc", style = MaterialTheme.typography.caption,
                             fontWeight = FontWeight.Bold
                         )
 
@@ -243,7 +249,7 @@ fun ScreenHome(navController: NavHostController){
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "IAC",
+                            text = "Iac",
                             style = MaterialTheme.typography.caption,
                             fontWeight = FontWeight.Bold
                         )
@@ -271,7 +277,7 @@ fun ScreenHome(navController: NavHostController){
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "INFO", style = MaterialTheme.typography.caption,
+                            text = "Info", style = MaterialTheme.typography.caption,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -297,7 +303,7 @@ fun ScreenHome(navController: NavHostController){
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "CONFIG", style = MaterialTheme.typography.caption,
+                            text = "Config", style = MaterialTheme.typography.caption,
                             fontWeight = FontWeight.Bold
                         )
                     }
