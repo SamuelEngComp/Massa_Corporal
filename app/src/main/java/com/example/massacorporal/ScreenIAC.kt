@@ -228,6 +228,7 @@ fun ScreenIAC(navController: NavHostController){
                                 onClick = {
                                     Indices.iac = String.format("%.2f", resultadoIac)
                                     Datas.dataIAC = timestampIAC
+                                    Estados.controleEstadoIAC = true
                                     navController.navigate(Screens.ScreenHome.route){
                                         popUpTo(Screens.ScreenHome.route){
                                             inclusive = true

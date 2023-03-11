@@ -229,6 +229,7 @@ fun ScreenImc(navController: NavHostController){
                         onClick = {
                             Indices.imc = String.format("%.2f", resultadoIMC)
                             Datas.dataIMC = timestampIMC
+                            Estados.controleEstadoIMC = true
 
                             navController.navigate(Screens.ScreenHome.route){
                                 popUpTo(Screens.ScreenHome.route){

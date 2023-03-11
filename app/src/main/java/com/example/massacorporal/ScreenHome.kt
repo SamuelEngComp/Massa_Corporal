@@ -109,10 +109,11 @@ fun ScreenHome(navController: NavHostController){
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
 
-                                Text(
-                                    text = " ${Estados.estadoImc}",
-                                    style = MaterialTheme.typography.caption
-                                )
+                                if (Estados.controleEstadoIMC)
+                                    Text(
+                                        text = " ${Estados.estadoImc}",
+                                        style = MaterialTheme.typography.caption
+                                    )
 
                                 Text(
                                     text = " $indiceIMC ",
@@ -174,10 +175,12 @@ fun ScreenHome(navController: NavHostController){
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
 
-                                Text(
-                                    text = " ${Estados.estadoIac}",
-                                    style = MaterialTheme.typography.caption
-                                )
+                                if (Estados.controleEstadoIAC)
+                                    Text(
+                                        text = " ${Estados.estadoIac}",
+                                        style = MaterialTheme.typography.caption
+                                    )
+
                                 Text(
                                     text = " $indiceIAC ",
                                     style = MaterialTheme.typography.h2,
