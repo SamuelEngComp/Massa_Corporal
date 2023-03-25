@@ -1,7 +1,6 @@
 package com.example.massacorporal.components
 
-const val intuitoApp = "App desenvolvido com o intuito de auxiliar as pessoas no " +
-        "cálculo do índice de massa corporal (IMC) e no índice de adiposidade corporal (IAC)."
+const val intuitoApp = """App desenvolvido com o intuito de auxiliar as pessoas no cálculo do índice de massa corporal (IMC) e no índice de adiposidade corporal (IAC)."""
 
 const val formulaUtilizadaIMC = "Para o cálculo do IMC a fórmula utilizada é a seguinte: IMC = Peso (Kg) / Altura² (m) ."
 
@@ -11,3 +10,6 @@ const val mensagem = "Esperamos que o App possa te auxiliar no controle e monito
 
 const val criadorApp = "App desenvolvido por Samuel Farias, Técnico em Informática da " +
         "Universidade Federal da Bahia"
+
+const val observacaoCrianca = "Lembrando que para a interpretação do resultado do IMC em crianças é necessário" +
+    " comparar o resultado com as curvas ...."

@@ -7,9 +7,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -34,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.modifier.modifierLocalConsumer
 
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
@@ -48,20 +44,15 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
-import com.example.massacorporal.components.Datas
-import com.example.massacorporal.components.Estados
-import com.example.massacorporal.components.Indices
+import com.example.massacorporal.components.*
 
 import com.example.massacorporal.navigation.Screens
-import com.example.massacorporal.ui.theme.AzulNeve
 import com.example.massacorporal.ui.theme.Laranja
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
-import kotlin.math.roundToInt
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -258,15 +249,43 @@ fun ScreenImc(navController: NavHostController){
                     backgroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorColor = when(animatedProgress){
-                        in 0.1f .. 18.5f -> { MaterialTheme.colors.primary } //magresa
-                        in 18.6f .. 24.9f -> { MaterialTheme.colors.primary } //normal
-                        in 25.0f .. 29.9f -> { Laranja } //sobrepeso
-                        in 30f .. 34.9f -> { Color.Red } //obesidade I
-                        in 35f .. 39.9f -> { Color.Red } //obesidade II
+                        in 0.1f .. 18.49f -> { MaterialTheme.colors.primary } //magresa
+                        in 18.50f .. 24.99f -> { MaterialTheme.colors.primary } //normal
+                        in 25.0f .. 29.99f -> { Laranja } //sobrepeso
+                        in 30f .. 34.99f -> { Color.Red } //obesidade I
+                        in 35f .. 39.99f -> { Color.Red } //obesidade II
                         in 40f .. 1000.0f -> { Color.Red } //obesidade III
                         else -> MaterialTheme.colors.primary
                     }
                 )
+
+                when(CalculoImc(resultadoIMC = animatedProgress)){
+                    "Abaixo do Peso" -> {
+                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                "${(alturaDaPessoa*alturaDaPessoa) * 21.7f}")
+                    }
+                    "Normal" -> {
+                        Text(text = "Continue assim, mantenha esse peso")
+                    }
+                    "Sobrepeso" -> {
+                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
+                    }
+                    "Obesidade Grau I" -> {
+                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
+                    }
+                    "Obesidade Grau II" -> {
+                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
+                    }
+                    "Obesidade Grau III" -> {
+                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
+                    }
+                    else -> ""
+                }
+
 
                 /**
                  *
@@ -303,30 +322,30 @@ fun ScreenImc(navController: NavHostController){
     }
 }
 
-
 fun CalculoImc(resultadoIMC: Float): String {
 
-    val resultadoPossiveis = listOf("Abaixo do Peso", "Normal", "Sobrepeso", "Obesidade Grau I", "Obesidade Grau II", "Obesidade Grau III")
+    val resultadoPossiveis = listOf(
+        NivelGorduraIMC.ABAIXO_DO_PESO.nivelGordura, "Normal", "Sobrepeso", "Obesidade Grau I", "Obesidade Grau II", "Obesidade Grau III")
     var resultado = ""
 
     when(resultadoIMC){
-        in 0.1f .. 18.5f -> {
+        in 0.1f .. 18.49f -> {
             resultado = resultadoPossiveis[0]
             Estados.estadoImc = resultado
         }
-        in 18.6f .. 24.9f -> {
+        in 18.50f .. 24.99f -> {
             resultado = resultadoPossiveis[1]
             Estados.estadoImc = resultado
         }
-        in 25.0f .. 29.9f -> {
+        in 25.0f .. 29.99f -> {
             resultado = resultadoPossiveis[2]
             Estados.estadoImc = resultado
         }
-        in 30.0f .. 34.9f -> {
+        in 30.0f .. 34.99f -> {
             resultado = resultadoPossiveis[3]
             Estados.estadoImc = resultado
         }
-        in 35.0f .. 39.9f -> {
+        in 35.0f .. 39.99f -> {
             resultado = resultadoPossiveis[4]
             Estados.estadoImc = resultado
         }

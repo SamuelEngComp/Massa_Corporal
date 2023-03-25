@@ -178,8 +178,8 @@ fun ScreenINFO(navController: NavHostController){
                                 Text(modifier = Modifier.padding(10.dp), text = mensagem,
                                     style = MaterialTheme.typography.body1)
 
-                                /*Text(modifier = Modifier.padding(10.dp), text = "$criadorApp",
-                                    style = MaterialTheme.typography.body1)*/
+                                Text(modifier = Modifier.padding(10.dp), text = observacaoCrianca,
+                                    style = MaterialTheme.typography.body1)
                             }
                         }
 
