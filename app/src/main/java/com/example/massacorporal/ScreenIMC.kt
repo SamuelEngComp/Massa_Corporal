@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.input.ImeAction
@@ -259,31 +260,35 @@ fun ScreenImc(navController: NavHostController){
                     }
                 )
 
-                when(CalculoImc(resultadoIMC = animatedProgress)){
-                    "Abaixo do Peso" -> {
-                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                "${(alturaDaPessoa*alturaDaPessoa) * 21.7f}")
+                Row(modifier = Modifier.fillMaxWidth(0.90f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center) {
+                    when(CalculoImc(resultadoIMC = animatedProgress)){
+                        "Abaixo do Peso" -> {
+                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                    "${(alturaDaPessoa*alturaDaPessoa) * 21.7f} Kg")
+                        }
+                        "Normal" -> {
+                            CustomTextAlerta(texto = "Continue assim, mantenha esse peso")
+                        }
+                        "Sobrepeso" -> {
+                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                        }
+                        "Obesidade Grau I" -> {
+                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                        }
+                        "Obesidade Grau II" -> {
+                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                        }
+                        "Obesidade Grau III" -> {
+                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                        }
+                        else -> ""
                     }
-                    "Normal" -> {
-                        Text(text = "Continue assim, mantenha esse peso")
-                    }
-                    "Sobrepeso" -> {
-                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
-                    }
-                    "Obesidade Grau I" -> {
-                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
-                    }
-                    "Obesidade Grau II" -> {
-                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
-                    }
-                    "Obesidade Grau III" -> {
-                        Text(text = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                "${(alturaDaPessoa*alturaDaPessoa)*24.0f}")
-                    }
-                    else -> ""
                 }
 
 
@@ -321,6 +326,18 @@ fun ScreenImc(navController: NavHostController){
         }
     }
 }
+
+@Composable
+fun CustomTextAlerta(texto: String){
+
+    Text(
+        text = texto,
+        style = MaterialTheme.typography.caption
+    )
+
+}
+
+
 
 fun CalculoImc(resultadoIMC: Float): String {
 
@@ -448,7 +465,7 @@ fun LoadingAnimation3(
 
 @Composable
 fun CustomComponent(
-    canvasSize: Dp = 300.dp,
+    canvasSize: Dp = 240.dp, //300
     indicatorValue: Int = 0,
     maxIndicatorValue: Int = 100,
     backgroundIndicatorColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f),
