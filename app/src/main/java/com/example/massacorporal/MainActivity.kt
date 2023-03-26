@@ -2,18 +2,23 @@ package com.example.massacorporal
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +28,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.massacorporal.navigation.SetupNavGraph
 import com.example.massacorporal.ui.theme.MassaCorporalTheme
+import com.example.massacorporal.util.DataStoreUtil
+import com.example.massacorporal.viewmodel.ThemeViewModel
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -55,10 +62,32 @@ class MainActivity : ComponentActivity() {
     }
 
 */
+
+    private val themeViewModel: ThemeViewModel by viewModels()
+    private lateinit var dataStoreUtil: DataStoreUtil
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
+        dataStoreUtil = DataStoreUtil(applicationContext)
+
+        val systemTheme = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> { true }
+            Configuration.UI_MODE_NIGHT_NO -> { false }
+            else -> { false }
+        }
+
+
         setContent {
-            MassaCorporalTheme {
+
+            val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
+
+            MassaCorporalTheme(
+                darkTheme = theme.value
+            ) {
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -71,7 +100,7 @@ class MainActivity : ComponentActivity() {
                    // ScreenHome()
                   //  ScreenINFO()
                     
-                    SetupNavGraph(navController = navController)
+                    SetupNavGraph(navController = navController, dataStoreUtil = dataStoreUtil, themeViewModel = themeViewModel)
                 }
             }
         }

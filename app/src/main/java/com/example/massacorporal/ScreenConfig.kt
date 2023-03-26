@@ -24,12 +24,20 @@ import androidx.navigation.NavHostController
 
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.ui.theme.AzulNeve
+import com.example.massacorporal.util.DataStoreUtil
+import com.example.massacorporal.viewmodel.ThemeViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun ScreenConfig(navController: NavHostController){
+fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, themeViewModel: ThemeViewModel){
 
-    var temaUsuario by rememberSaveable { mutableStateOf("padrao") }
+    //var temaUsuario by rememberSaveable { mutableStateOf("padrao") }
+
+    var switchState by rememberSaveable {themeViewModel.isDarkThemeEnabled }
+    val coroutineScope = rememberCoroutineScope()
+    var radioValor by rememberSaveable { mutableStateOf(false) }
+
 
 
     Scaffold(
@@ -71,47 +79,82 @@ fun ScreenConfig(navController: NavHostController){
                                 text = "Personalize o App e deixe-o com a sua cara",
                                 style = MaterialTheme.typography.body1)
 
-                            Row( modifier = Modifier
-                                    .fillMaxWidth(0.40f)
-                                    .padding(5.dp),
-                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
-                            {
-                                Text(text = "Padrão", modifier = Modifier
-                                    .clickable { temaUsuario = "padrao" }
-                                    .align(alignment = Alignment.CenterVertically)
-                                )
-                                RadioButton(
-                                    selected = temaUsuario == "padrao",
-                                    onClick = {
-                                        temaUsuario = "padrao"
-                                    },
-                                    colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.primary
-                                    )
-                                )
+
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(20.dp)
+                            ) {
+
+                                Card(
+                                    shape = CircleShape,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(20.dp),
+                                    elevation = 10.dp
+                                ) {
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(10.dp),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically) {
+
+                                        Text(
+                                            text = if (switchState) "Dark mode" else "Light mode",
+                                            modifier = Modifier
+                                                .align(alignment = Alignment.CenterVertically)
+                                                .padding(start = 10.dp)
+                                        )
+
+                                        Switch(
+                                            checked = switchState,
+                                            colors = SwitchDefaults.colors(
+                                                checkedThumbColor = MaterialTheme.colors.primary,
+                                                uncheckedThumbColor = MaterialTheme.colors.primary
+                                            ),
+                                            onCheckedChange = {
+                                                switchState = it
+
+                                                coroutineScope.launch {
+                                                    dataStore.saveTheme(it)
+                                                }
+                                            }
+                                        )
+                                    }
+                                }
                             }
 
-                            Row( modifier = Modifier
-                                    .fillMaxWidth(0.40f)
-                                    .padding(5.dp),
+
+                            /*Row( modifier = Modifier
+                                .fillMaxWidth(0.40f)
+                                .padding(5.dp),
                                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
                             {
                                 Text(text = "Dark", modifier = Modifier
-                                    .clickable { temaUsuario = "dark" }
+                                    .clickable {
+                                        coroutineScope.launch {
+                                            dataStore.saveTheme(!switchState)
+                                        }
+                                    }
                                     .align(alignment = Alignment.CenterVertically)
                                 )
                                 RadioButton(
-                                    selected = temaUsuario == "dark",
+                                    selected = radioValor == !switchState,
                                     onClick = {
-                                        temaUsuario = "dark"
+                                        coroutineScope.launch {
+                                            dataStore.saveTheme(!switchState)
+                                        }
                                     },
                                     colors = RadioButtonDefaults.colors(
                                         selectedColor = MaterialTheme.colors.primary
                                     )
                                 )
-                            }
+                            }*/
 
-                            Row(
+                           /* Row(
                                 modifier = Modifier
                                     .fillMaxWidth(0.40f)
                                     .padding(5.dp),
@@ -119,19 +162,25 @@ fun ScreenConfig(navController: NavHostController){
                             {
                                 Text(
                                     text = "Light", modifier = Modifier
-                                        .clickable { temaUsuario = "light" }
+                                        .clickable {
+                                            coroutineScope.launch {
+                                                dataStore.saveTheme(switchState)
+                                            }
+                                        }
                                         .align(alignment = Alignment.CenterVertically)
                                 )
                                 RadioButton(
-                                    selected = temaUsuario == "light",
+                                    selected = radioValor == switchState,
                                     onClick = {
-                                        temaUsuario = "light"
+                                        coroutineScope.launch {
+                                            dataStore.saveTheme(switchState)
+                                        }
                                     },
                                     colors = RadioButtonDefaults.colors(
                                         selectedColor = MaterialTheme.colors.primary
                                     )
                                 )
-                            }
+                            }*/
 
                         }
 
@@ -148,4 +197,14 @@ fun ScreenConfig(navController: NavHostController){
                 }
         }
     )
+
+
+    /**
+     * forma muito simples e bacana de fazer as alterações de cores do sistema utilizando jetpack compose
+     * utilizou o padrao ViewModel -> MVVM que eu tenho que aprender o quanto antes...
+     *
+     * fonte: https://itnext.io/dark-theme-in-jetpack-compose-with-material-3-757e45118259
+     *
+     */
+
 }

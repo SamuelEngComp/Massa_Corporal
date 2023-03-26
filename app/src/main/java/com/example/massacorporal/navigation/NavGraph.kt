@@ -7,12 +7,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.massacorporal.*
+import com.example.massacorporal.util.DataStoreUtil
+import com.example.massacorporal.viewmodel.ThemeViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SetupNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    dataStoreUtil: DataStoreUtil,
+    themeViewModel: ThemeViewModel
 ){
 
     NavHost(
@@ -41,7 +45,7 @@ fun SetupNavGraph(
         }
 
         composable(route = Screens.ScreenConfig.route){
-            ScreenConfig(navController = navController)
+            ScreenConfig(navController = navController, dataStore = dataStoreUtil ,themeViewModel = themeViewModel)
         }
 
 
