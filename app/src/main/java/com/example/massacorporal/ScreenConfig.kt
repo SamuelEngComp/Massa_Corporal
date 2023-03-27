@@ -3,9 +3,11 @@ package com.example.massacorporal
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -36,7 +39,7 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
 
     var switchState by rememberSaveable {themeViewModel.isDarkThemeEnabled }
     val coroutineScope = rememberCoroutineScope()
-    var radioValor by rememberSaveable { mutableStateOf(false) }
+    //var radioValor by rememberSaveable { mutableStateOf(false) }
 
 
 
@@ -63,7 +66,8 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                 paddingValues -> Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues),
+                        .padding(paddingValues)
+                        .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -72,14 +76,6 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Top
                         ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.80f)
-                                    .padding(10.dp),
-                                text = "Personalize o App e deixe-o com a sua cara",
-                                style = MaterialTheme.typography.body1)
-
-
 
                             Row(
                                 modifier = Modifier
@@ -128,59 +124,53 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                             }
 
 
-                            /*Row( modifier = Modifier
-                                .fillMaxWidth(0.40f)
-                                .padding(5.dp),
-                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
-                            {
-                                Text(text = "Dark", modifier = Modifier
-                                    .clickable {
-                                        coroutineScope.launch {
-                                            dataStore.saveTheme(!switchState)
-                                        }
-                                    }
-                                    .align(alignment = Alignment.CenterVertically)
-                                )
-                                RadioButton(
-                                    selected = radioValor == !switchState,
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            dataStore.saveTheme(!switchState)
-                                        }
-                                    },
-                                    colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.primary
-                                    )
-                                )
-                            }*/
-
-                           /* Row(
+                            Row(
                                 modifier = Modifier
-                                    .fillMaxWidth(0.40f)
+                                    .fillMaxWidth()
                                     .padding(5.dp),
-                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
-                            {
-                                Text(
-                                    text = "Light", modifier = Modifier
-                                        .clickable {
-                                            coroutineScope.launch {
-                                                dataStore.saveTheme(switchState)
-                                            }
-                                        }
-                                        .align(alignment = Alignment.CenterVertically)
-                                )
-                                RadioButton(
-                                    selected = radioValor == switchState,
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            dataStore.saveTheme(switchState)
-                                        }
-                                    },
-                                    colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.primary
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+
+                                Button(
+                                    onClick = { /*TODO*/ },
+                                    shape = CircleShape,
+                                    modifier = Modifier.fillMaxWidth(0.80f),
+                                    elevation = ButtonDefaults.elevation(
+                                        defaultElevation = 10.dp,
+                                        pressedElevation = 0.dp
                                     )
-                                )
-                            }*/
+                                ) {
+                                    Text(text = "Termos de Uso")
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Icon(painter = painterResource(id = R.drawable.open_new),
+                                        contentDescription = "Icone Termos de uso")
+                                }
+
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center)
+                            {
+                                Button(
+                                    onClick = { /*TODO*/ },
+                                    modifier = Modifier.fillMaxWidth(0.80f),
+                                    elevation = ButtonDefaults.elevation(
+                                        defaultElevation = 10.dp,
+                                        pressedElevation = 0.dp
+                                    ),
+                                    shape = CircleShape
+                                ) {
+                                    Text(text = "Política de Privacidade")
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Icon(painter = painterResource(id = R.drawable.open_new),
+                                        contentDescription = "Icone politica privacidade")
+                                }
+                            }
 
                         }
 

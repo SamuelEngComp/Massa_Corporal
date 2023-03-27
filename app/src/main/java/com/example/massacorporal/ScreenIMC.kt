@@ -287,7 +287,7 @@ fun ScreenImc(navController: NavHostController){
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
                                     "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
                         }
-                        else -> ""
+                        else -> {""}
                     }
                 }
 
@@ -465,7 +465,7 @@ fun LoadingAnimation3(
 
 @Composable
 fun CustomComponent(
-    canvasSize: Dp = 240.dp, //300
+    canvasSize: Dp = 300.dp, //300
     indicatorValue: Int = 0,
     maxIndicatorValue: Int = 100,
     backgroundIndicatorColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f),
