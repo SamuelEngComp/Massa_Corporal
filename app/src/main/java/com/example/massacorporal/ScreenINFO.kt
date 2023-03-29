@@ -163,7 +163,7 @@ fun ScreenINFO(navController: NavHostController){
 
                                         if (expandedIAC){
                                             Text(modifier = Modifier.padding(10.dp),
-                                                text = formulaUtilizadaIAC,
+                                                text = "$formulaUtilizadaIAC $comoMedirIAC",
                                                 style = MaterialTheme.typography.body1)
                                         }
 
@@ -178,8 +178,8 @@ fun ScreenINFO(navController: NavHostController){
                                 Text(modifier = Modifier.padding(10.dp), text = mensagem,
                                     style = MaterialTheme.typography.body1)
 
-                                Text(modifier = Modifier.padding(10.dp), text = observacaoCrianca,
-                                    style = MaterialTheme.typography.body1)
+                                /*Text(modifier = Modifier.padding(10.dp), text = observacaoCrianca,
+                                    style = MaterialTheme.typography.body1)*/
                             }
                         }
 

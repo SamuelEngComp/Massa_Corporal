@@ -1,5 +1,7 @@
 package com.example.massacorporal
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,6 +20,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -40,6 +43,13 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
     var switchState by rememberSaveable {themeViewModel.isDarkThemeEnabled }
     val coroutineScope = rememberCoroutineScope()
     //var radioValor by rememberSaveable { mutableStateOf(false) }
+
+    val termosDeUsoUrl = "https://sites.google.com/view/massacorporaldev"
+    val intentTermoDeUso = Intent(Intent.ACTION_VIEW, Uri.parse(termosDeUsoUrl))
+
+    val politicaPrivacidadeUrl = "https://sites.google.com/view/massacorporaldevprivacidade/"
+    val intentPoliticaPrivacidade = Intent(Intent.ACTION_VIEW, Uri.parse(politicaPrivacidadeUrl))
+    val context = LocalContext.current
 
 
 
@@ -133,7 +143,9 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                             ) {
 
                                 Button(
-                                    onClick = { /*TODO*/ },
+                                    onClick = {
+                                              context.startActivity(intentTermoDeUso)
+                                              },
                                     shape = CircleShape,
                                     modifier = Modifier.fillMaxWidth(0.80f),
                                     elevation = ButtonDefaults.elevation(
@@ -143,8 +155,10 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                 ) {
                                     Text(text = "Termos de Uso")
                                     Spacer(modifier = Modifier.width(10.dp))
-                                    Icon(painter = painterResource(id = R.drawable.open_new),
-                                        contentDescription = "Icone Termos de uso")
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.open_new),
+                                        contentDescription = "Icone Termos de uso",
+                                        modifier = Modifier.padding(start = 5.dp))
                                 }
 
                             }
@@ -157,7 +171,9 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                 horizontalArrangement = Arrangement.Center)
                             {
                                 Button(
-                                    onClick = { /*TODO*/ },
+                                    onClick = {
+                                              context.startActivity(intentPoliticaPrivacidade)
+                                              },
                                     modifier = Modifier.fillMaxWidth(0.80f),
                                     elevation = ButtonDefaults.elevation(
                                         defaultElevation = 10.dp,
@@ -168,7 +184,8 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                     Text(text = "Política de Privacidade")
                                     Spacer(modifier = Modifier.width(10.dp))
                                     Icon(painter = painterResource(id = R.drawable.open_new),
-                                        contentDescription = "Icone politica privacidade")
+                                        contentDescription = "Icone politica privacidade",
+                                        modifier = Modifier.padding(start = 5.dp))
                                 }
                             }
 

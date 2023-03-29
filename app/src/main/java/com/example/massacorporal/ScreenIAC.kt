@@ -278,6 +278,67 @@ fun ScreenIAC(navController: NavHostController){
 
                         )
 
+                        Row(modifier = Modifier.fillMaxWidth(0.90f),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center) {
+
+
+                            if (sexoUsuario == "masculino"){
+                                when(CalculoIac(resultadoDoIac = animatedProgress, sexo = sexoUsuario)){
+                                    "Muito baixa" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (19.0f + 18f) ))} cm")
+                                    }
+                                    "Baixa" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (19.0f + 18f) ))} cm")
+                                    }
+                                    "Ideal" -> {
+                                        CustomTextAlerta(texto = "Parabéns, agora é só manter " )
+                                    }
+                                    "Moderada" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (19.0f + 18f) ))} cm")
+                                    }
+                                    "Excesso" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (19.0f + 18f) ))} cm")
+                                    }
+                                    else -> {""}
+                                }
+                            }else{
+                                when(CalculoIac(resultadoDoIac = animatedProgress, sexo = sexoUsuario)){
+                                    "Muito baixa" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (21.0f + 18f) ))} cm")
+                                    }
+                                    "Baixa" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (21.0f + 18f) ))} cm")
+                                    }
+                                    "Ideal" -> {
+                                        CustomTextAlerta(texto = "Parabéns, agora é só manter " )
+                                    }
+                                    "Moderada" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (23.0f + 18f) ))} cm")
+                                    }
+                                    "Excesso" -> {
+                                        CustomTextAlerta(texto = "Para ficar Normal é necessário que seu quadril seja no mínimo: " +
+                                                "${( (alturaUsuario.pow(1.5f) * (23.0f + 18f) ))} cm")
+                                    }
+                                    else -> {""}
+                                }
+                            }
+
+
+
+
+                        }
+
+
+
+
                     }
 
                     Row(
