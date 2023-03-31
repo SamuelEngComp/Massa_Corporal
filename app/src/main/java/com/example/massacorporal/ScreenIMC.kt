@@ -266,26 +266,26 @@ fun ScreenImc(navController: NavHostController){
                     when(CalculoImc(resultadoIMC = animatedProgress)){
                         "Abaixo do Peso" -> {
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${(alturaDaPessoa*alturaDaPessoa) * 21.7f} Kg")
+                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa) * 21.7f)} Kg")
                         }
                         "Normal" -> {
                             CustomTextAlerta(texto = "Continue assim, mantenha esse peso")
                         }
                         "Sobrepeso" -> {
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
                         }
                         "Obesidade Grau I" -> {
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
                         }
                         "Obesidade Grau II" -> {
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
                         }
                         "Obesidade Grau III" -> {
                             CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${(alturaDaPessoa*alturaDaPessoa)*24.0f} Kg")
+                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
                         }
                         else -> {""}
                     }
