@@ -96,7 +96,9 @@ fun ScreenHome(navController: NavHostController){
                 ) {
                     Card(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth().clickable {
+                                navController.navigate(route = Screens.ScreenIMC.route)
+                            },
                         elevation = 10.dp,
                         shape = RoundedCornerShape(10.dp)
                     ) {
@@ -151,7 +153,9 @@ fun ScreenHome(navController: NavHostController){
                 ) {
                     Card(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth().clickable {
+                                navController.navigate(route = Screens.ScreenIAC.route)
+                            },
                         elevation = 10.dp,
                         shape = RoundedCornerShape(10.dp)
                     ) {
