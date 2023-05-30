@@ -11,6 +11,20 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -35,7 +49,7 @@ import kotlin.math.pow
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenIAC(navController: NavHostController){
 
@@ -79,8 +93,9 @@ fun ScreenIAC(navController: NavHostController){
                             Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
                      }
                  },
-                 elevation = 0.dp,
-                 backgroundColor = Color.Transparent)
+                 colors = TopAppBarDefaults.smallTopAppBarColors(
+                     containerColor = Color.Transparent
+                 ))
         },
         content = {
             paddingValues -> Column(
@@ -118,7 +133,7 @@ fun ScreenIAC(navController: NavHostController){
                                         sexoUsuario = "masculino"
                                      },
                                     colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.primary
+                                        selectedColor = MaterialTheme.colorScheme.primary
                                     )
                                 )
                             }
@@ -136,7 +151,7 @@ fun ScreenIAC(navController: NavHostController){
                                         sexoUsuario = "feminino"
                                     },
                                     colors = RadioButtonDefaults.colors(
-                                        selectedColor = MaterialTheme.colors.primary
+                                        selectedColor = MaterialTheme.colorScheme.primary
                                     )
                                 )
                             }
@@ -148,9 +163,9 @@ fun ScreenIAC(navController: NavHostController){
                                 .padding(5.dp),
                             value = larguraQuadril,
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                cursorColor = MaterialTheme.colors.primary,
-                                focusedBorderColor = MaterialTheme.colors.primary,
-                                focusedLabelColor = MaterialTheme.colors.primary
+                                cursorColor = MaterialTheme.colorScheme.primary,
+                                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                focusedLabelColor = MaterialTheme.colorScheme.primary
                             ),
                             onValueChange = {
                                 if (it.length <= 3 && !it.startsWith("0")){
@@ -261,18 +276,18 @@ fun ScreenIAC(navController: NavHostController){
                                     in 6.0f .. 11.0f -> { Color.Red } //muito baixa
                                     in 11.1f .. 15.0f -> { Laranja } //baixa
                                     in 15.1f .. 19.0f -> { Color.Green } //ideal
-                                    in 19.1f .. 25.0f -> { MaterialTheme.colors.primary } //moderada
+                                    in 19.1f .. 25.0f -> { MaterialTheme.colorScheme.primary } //moderada
                                     in 25.1f .. 1029.9f -> { Color.Red } //excesso
-                                    else -> MaterialTheme.colors.primary
+                                    else -> MaterialTheme.colorScheme.primary
                                 }
                             }else{
                                 when(animatedProgress){
                                     in 10.0f .. 16.0f -> { Color.Red } //muito baixa
                                     in 16.1f .. 20.0f -> { Laranja } //baixa
                                     in 20.1f .. 26.0f -> { Color.Green } //ideal
-                                    in 26.1f .. 30.0f -> { MaterialTheme.colors.primary } //moderada
+                                    in 26.1f .. 30.0f -> { MaterialTheme.colorScheme.primary } //moderada
                                     in 30.1f .. 1029.9f -> { Color.Red } //excesso
-                                    else -> MaterialTheme.colors.primary
+                                    else -> MaterialTheme.colorScheme.primary
                                 }
                             }
 

@@ -17,6 +17,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -57,7 +69,7 @@ import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenImc(navController: NavHostController){
 
@@ -101,7 +113,6 @@ fun ScreenImc(navController: NavHostController){
         topBar = {
             TopAppBar(
                 title = { Text(text = "Calcule seu IMC")},
-                backgroundColor = Color.Transparent,
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -114,7 +125,9 @@ fun ScreenImc(navController: NavHostController){
                         Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
                     }
                 },
-            elevation = 0.dp)
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = Color.Transparent
+            ))
         }
     ) { paddingValues ->
         Column(
@@ -139,9 +152,9 @@ fun ScreenImc(navController: NavHostController){
                         .padding(10.dp),
                     value = alturaPessoa,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        cursorColor = MaterialTheme.colors.primary,
-                        focusedBorderColor = MaterialTheme.colors.primary,
-                        focusedLabelColor = MaterialTheme.colors.primary
+                        cursorColor = MaterialTheme.colorScheme.primary,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary
                     ),
                     onValueChange = {
                         if (it.length <= 3 && !it.startsWith("0")) {
@@ -250,13 +263,13 @@ fun ScreenImc(navController: NavHostController){
                     backgroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorColor = when(animatedProgress){
-                        in 0.1f .. 18.49f -> { MaterialTheme.colors.primary } //magresa
-                        in 18.50f .. 24.99f -> { MaterialTheme.colors.primary } //normal
+                        in 0.1f .. 18.49f -> { MaterialTheme.colorScheme.primary } //magresa
+                        in 18.50f .. 24.99f -> { MaterialTheme.colorScheme.primary } //normal
                         in 25.0f .. 29.99f -> { Laranja } //sobrepeso
                         in 30f .. 34.99f -> { Color.Red } //obesidade I
                         in 35f .. 39.99f -> { Color.Red } //obesidade II
                         in 40f .. 1000.0f -> { Color.Red } //obesidade III
-                        else -> MaterialTheme.colors.primary
+                        else -> MaterialTheme.colorScheme.primary
                     }
                 )
 
@@ -332,7 +345,7 @@ fun CustomTextAlerta(texto: String){
 
     Text(
         text = texto,
-        style = MaterialTheme.typography.caption
+        style = MaterialTheme.typography.titleSmall
     )
 
 }
@@ -392,7 +405,7 @@ fun ResultadoDoImc(altura: Float, peso: Float): Float{
 
 @Composable
 fun LoadingAnimation3(
-    circleColor: Color = MaterialTheme.colors.primary,//Color(0xFF35898F),
+    circleColor: Color = MaterialTheme.colorScheme.primary,//Color(0xFF35898F),
     circleSize: Dp = 36.dp,
     animationDelay: Int = 400,
     initialAlpha: Float = 0.3f
@@ -468,17 +481,17 @@ fun CustomComponent(
     canvasSize: Dp = 300.dp, //300
     indicatorValue: Int = 0,
     maxIndicatorValue: Int = 100,
-    backgroundIndicatorColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f),
+    backgroundIndicatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
     backgroundIndicatorStrokeWidth: Float = 100f,
-    foregroundIndicatorColor: Color = MaterialTheme.colors.primary,
+    foregroundIndicatorColor: Color = MaterialTheme.colorScheme.primary,
     foregroundIndicatorStrokeWidth: Float = 100f,
 //    indicatorStrokeCap: StrokeCap = StrokeCap.Round,
-    bigTextFontSize: TextUnit = MaterialTheme.typography.body2.fontSize,
-    bigTextColor: Color = MaterialTheme.colors.onSurface,
+    bigTextFontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
+    bigTextColor: Color = MaterialTheme.colorScheme.onSurface,
     bigTextSuffix: String = "GB",
     smallText: String = "Remaining",
-    smallTextFontSize: TextUnit = MaterialTheme.typography.subtitle1.fontSize,
-    smallTextColor: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f)
+    smallTextFontSize: TextUnit = MaterialTheme.typography.titleSmall.fontSize,
+    smallTextColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
 ) {
     var allowedIndicatorValue by remember {
         mutableStateOf(maxIndicatorValue)
@@ -509,7 +522,7 @@ fun CustomComponent(
 
     val animatedBigTextColor by animateColorAsState(
         targetValue = if (allowedIndicatorValue == 0)
-            MaterialTheme.colors.onSurface.copy(alpha = 0.3f)
+            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
         else
             bigTextColor,
         animationSpec = tween(1000)

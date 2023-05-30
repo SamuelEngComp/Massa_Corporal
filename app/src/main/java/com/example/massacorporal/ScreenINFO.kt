@@ -11,6 +11,16 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +38,7 @@ import com.example.massacorporal.components.*
 import com.example.massacorporal.navigation.Screens
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenINFO(navController: NavHostController){
 
@@ -57,8 +67,10 @@ fun ScreenINFO(navController: NavHostController){
                         Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
                     }
                 },
-                elevation = 0.dp,
-            backgroundColor = Color.Transparent)
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = Color.Transparent
+                )
+            )
         },
         content = {
             paddingValues -> Column(
@@ -83,7 +95,7 @@ fun ScreenINFO(navController: NavHostController){
                                     .fillMaxWidth()
                             ) {
                                 Text(modifier = Modifier.padding(10.dp), text = intuitoApp,
-                                    style = MaterialTheme.typography.body1)
+                                    style = MaterialTheme.typography.bodySmall)
 
                                 ///////////////////////////////////////////////////////
 
@@ -108,7 +120,7 @@ fun ScreenINFO(navController: NavHostController){
                                                 fontWeight = FontWeight.Bold)
                                             IconButton(
                                                 modifier = Modifier
-                                                    .alpha(ContentAlpha.medium)
+                                                    .alpha(1f)
                                                     .weight(1f)
                                                     .rotate(animatedStateIMC),
                                                 onClick = { expandedIMC = !expandedIMC }
@@ -121,7 +133,7 @@ fun ScreenINFO(navController: NavHostController){
 
                                         if (expandedIMC){
                                             Text(modifier = Modifier.padding(10.dp), text = formulaUtilizadaIMC,
-                                                style = MaterialTheme.typography.body1)
+                                                style = MaterialTheme.typography.headlineMedium)
                                         }
 
                                     }
@@ -150,7 +162,7 @@ fun ScreenINFO(navController: NavHostController){
                                             fontWeight = FontWeight.Bold)
                                             IconButton(
                                                 modifier = Modifier
-                                                    .alpha(ContentAlpha.medium)
+                                                    .alpha(1f)
                                                     .weight(1f)
                                                     .rotate(animatedStateIAC),
                                                 onClick = { expandedIAC = !expandedIAC }
@@ -164,7 +176,7 @@ fun ScreenINFO(navController: NavHostController){
                                         if (expandedIAC){
                                             Text(modifier = Modifier.padding(10.dp),
                                                 text = "$formulaUtilizadaIAC $comoMedirIAC",
-                                                style = MaterialTheme.typography.body1)
+                                                style = MaterialTheme.typography.bodySmall)
                                         }
 
                                     }
@@ -176,7 +188,7 @@ fun ScreenINFO(navController: NavHostController){
 
 
                                 Text(modifier = Modifier.padding(10.dp), text = mensagem,
-                                    style = MaterialTheme.typography.body1)
+                                    style = MaterialTheme.typography.bodySmall)
 
                                 /*Text(modifier = Modifier.padding(10.dp), text = observacaoCrianca,
                                     style = MaterialTheme.typography.body1)*/

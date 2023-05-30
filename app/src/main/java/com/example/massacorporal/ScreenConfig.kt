@@ -13,6 +13,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -35,6 +49,7 @@ import com.example.massacorporal.viewmodel.ThemeViewModel
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, themeViewModel: ThemeViewModel){
 
@@ -69,8 +84,9 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                         Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
                     }
                 },
-            elevation = 0.dp,
-            backgroundColor = Color.Transparent)
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                containerColor = Color.Transparent
+            ))
         },
         content = {
                 paddingValues -> Column(
@@ -98,7 +114,9 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(20.dp),
-                                    elevation = 10.dp
+                                    elevation = CardDefaults.cardElevation(
+                                        defaultElevation = 10.dp
+                                    )
                                 ) {
 
                                     Row(
@@ -118,8 +136,8 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                         Switch(
                                             checked = switchState,
                                             colors = SwitchDefaults.colors(
-                                                checkedThumbColor = MaterialTheme.colors.primary,
-                                                uncheckedThumbColor = MaterialTheme.colors.primary
+                                                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                                uncheckedThumbColor = MaterialTheme.colorScheme.primary
                                             ),
                                             onCheckedChange = {
                                                 switchState = it
@@ -148,7 +166,7 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                               },
                                     shape = CircleShape,
                                     modifier = Modifier.fillMaxWidth(0.80f),
-                                    elevation = ButtonDefaults.elevation(
+                                    elevation = ButtonDefaults.buttonElevation(
                                         defaultElevation = 10.dp,
                                         pressedElevation = 0.dp
                                     )
@@ -175,7 +193,7 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                               context.startActivity(intentPoliticaPrivacidade)
                                               },
                                     modifier = Modifier.fillMaxWidth(0.80f),
-                                    elevation = ButtonDefaults.elevation(
+                                    elevation = ButtonDefaults.buttonElevation(
                                         defaultElevation = 10.dp,
                                         pressedElevation = 0.dp
                                     ),

@@ -5,6 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,20 +79,20 @@ fun ScreenHome(navController: NavHostController){
                             modifier = Modifier.padding(10.dp),
                             text = bemVindo,
                             fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.subtitle2)
+                            style = MaterialTheme.typography.titleSmall)
 
                         Text(
                             text = cuidarSaude,
-                            style = MaterialTheme.typography.h4,
+                            style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colors.primary
+                            color = MaterialTheme.colorScheme.primary
                         )
 
                         Text(
                             text = monitorarIndices,
-                            style = MaterialTheme.typography.h4,
+                            style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colors.primary
+                            color = MaterialTheme.colorScheme.primary
                         )
 
                     }
@@ -96,10 +104,13 @@ fun ScreenHome(navController: NavHostController){
                 ) {
                     Card(
                         modifier = Modifier
-                            .fillMaxWidth().clickable {
+                            .fillMaxWidth()
+                            .clickable {
                                 navController.navigate(route = Screens.ScreenIMC.route)
                             },
-                        elevation = 10.dp,
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 10.dp
+                        ),
                         shape = RoundedCornerShape(10.dp)
                     ) {
 
@@ -115,29 +126,29 @@ fun ScreenHome(navController: NavHostController){
                                 if (Estados.controleEstadoIMC)
                                     Text(
                                         text = " ${Estados.estadoImc}",
-                                        style = MaterialTheme.typography.caption
+                                        style = MaterialTheme.typography.titleSmall
                                     )
 
                                 Text(
                                     text = " $indiceIMC ",
-                                    style = MaterialTheme.typography.h2,
+                                    style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold
                                 )
 
                                 Text(
                                     text = " ${Datas.dataIMC} ",
-                                    style = MaterialTheme.typography.caption
+                                    style = MaterialTheme.typography.titleSmall
                                 )
                             }
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IMC ",
-                                    style = MaterialTheme.typography.h2,
+                                    style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colors.primary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier
                                         .background(
-                                            color = MaterialTheme.colors.background,
+                                            color = MaterialTheme.colorScheme.background,
                                             shape = CircleShape
                                         )
                                         .padding(10.dp)
@@ -153,10 +164,13 @@ fun ScreenHome(navController: NavHostController){
                 ) {
                     Card(
                         modifier = Modifier
-                            .fillMaxWidth().clickable {
+                            .fillMaxWidth()
+                            .clickable {
                                 navController.navigate(route = Screens.ScreenIAC.route)
                             },
-                        elevation = 10.dp,
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 10.dp
+                        ),
                         shape = RoundedCornerShape(10.dp)
                     ) {
 
@@ -168,12 +182,12 @@ fun ScreenHome(navController: NavHostController){
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IAC ",
-                                    style = MaterialTheme.typography.h2,
+                                    style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colors.primary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier
                                         .background(
-                                            color = MaterialTheme.colors.background,
+                                            color = MaterialTheme.colorScheme.background,
                                             shape = CircleShape
                                         )
                                         .padding(10.dp)
@@ -184,16 +198,16 @@ fun ScreenHome(navController: NavHostController){
                                 if (Estados.controleEstadoIAC)
                                     Text(
                                         text = " ${Estados.estadoIac}",
-                                        style = MaterialTheme.typography.caption
+                                        style = MaterialTheme.typography.titleSmall
                                     )
 
                                 Text(
                                     text = " $indiceIAC ",
-                                    style = MaterialTheme.typography.h2,
+                                    style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(text = " ${Datas.dataIAC} ",
-                                    style = MaterialTheme.typography.caption)
+                                    style = MaterialTheme.typography.titleSmall)
                             }
                         }
                     }
@@ -213,7 +227,7 @@ fun ScreenHome(navController: NavHostController){
                             onClick = {
                                 navController.navigate(route = Screens.ScreenIMC.route)
                             },
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 10.dp,
                                 pressedElevation = 0.dp,
                                 focusedElevation = 15.dp,
@@ -225,12 +239,12 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.calculate_24),
                                 contentDescription = "botao imc",
-                                tint = MaterialTheme.colors.primary
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "Imc", style = MaterialTheme.typography.caption,
+                            text = "Imc", style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
 
@@ -241,7 +255,7 @@ fun ScreenHome(navController: NavHostController){
                             onClick = {
                                 navController.navigate(route = Screens.ScreenIAC.route)
                             },
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 10.dp,
                                 pressedElevation = 0.dp,
                                 focusedElevation = 15.dp,
@@ -253,13 +267,13 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.calculate_24),
                                 contentDescription = "botao iac",
-                                tint = MaterialTheme.colors.primary
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
                             text = "Iac",
-                            style = MaterialTheme.typography.caption,
+                            style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -269,7 +283,7 @@ fun ScreenHome(navController: NavHostController){
                             onClick = {
                                 navController.navigate(route = Screens.ScreenINFO.route)
                             },
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 10.dp,
                                 pressedElevation = 0.dp,
                                 focusedElevation = 15.dp,
@@ -281,12 +295,12 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.info_24),
                                 contentDescription = "botao info",
-                                tint = MaterialTheme.colors.primary
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "Info", style = MaterialTheme.typography.caption,
+                            text = "Info", style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -296,7 +310,7 @@ fun ScreenHome(navController: NavHostController){
                             onClick = {
                                 navController.navigate(route = Screens.ScreenConfig.route)
                             },
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 10.dp,
                                 pressedElevation = 0.dp,
                                 focusedElevation = 15.dp,
@@ -308,11 +322,11 @@ fun ScreenHome(navController: NavHostController){
                                 modifier = Modifier.size(40.dp),
                                 painter = painterResource(id = R.drawable.baseline_settings_24),
                                 contentDescription = "botao config",
-                                tint = MaterialTheme.colors.primary
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                         Text(modifier = Modifier.padding(10.dp),
-                            text = "Config", style = MaterialTheme.typography.caption,
+                            text = "Config", style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
                     }

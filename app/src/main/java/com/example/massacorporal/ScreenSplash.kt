@@ -7,8 +7,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -76,7 +77,7 @@ fun Splash(alpha: Float){
                     .size(100.dp)
                     .alpha(alpha = alpha),
                 colorFilter = ColorFilter.tint(
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
             Text(
@@ -84,8 +85,8 @@ fun Splash(alpha: Float){
                     .padding(20.dp)
                     .alpha(alpha = alpha),
                 text = "Massa Corporal",
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

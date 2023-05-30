@@ -13,9 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -85,13 +85,14 @@ class MainActivity : ComponentActivity() {
             val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
 
             MassaCorporalTheme(
-                darkTheme = theme.value
+                darkTheme = theme.value,
+                dynamicColor = true
             ) {
 
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
 
                     navController = rememberNavController()
