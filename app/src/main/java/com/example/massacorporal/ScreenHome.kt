@@ -10,6 +10,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shadow
@@ -79,18 +82,18 @@ fun ScreenHome(navController: NavHostController){
                             modifier = Modifier.padding(10.dp),
                             text = bemVindo,
                             fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.titleSmall)
+                            style = MaterialTheme.typography.headlineSmall)
 
                         Text(
                             text = cuidarSaude,
-                            style = MaterialTheme.typography.labelSmall,
+                            style = MaterialTheme.typography.displaySmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
 
                         Text(
                             text = monitorarIndices,
-                            style = MaterialTheme.typography.titleSmall,
+                            style = MaterialTheme.typography.displaySmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -117,7 +120,7 @@ fun ScreenHome(navController: NavHostController){
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier.fillMaxWidth().padding(10.dp)
                         ) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -143,7 +146,7 @@ fun ScreenHome(navController: NavHostController){
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IMC ",
-                                    style = MaterialTheme.typography.titleSmall,
+                                    style = MaterialTheme.typography.displayMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier
@@ -177,12 +180,12 @@ fun ScreenHome(navController: NavHostController){
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier.fillMaxWidth().padding(10.dp)
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = " IAC ",
-                                    style = MaterialTheme.typography.titleSmall,
+                                    style = MaterialTheme.typography.displayMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier
@@ -223,17 +226,11 @@ fun ScreenHome(navController: NavHostController){
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                        OutlinedButton(
+                        IconButton(
                             onClick = {
                                 navController.navigate(route = Screens.ScreenIMC.route)
                             },
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 10.dp,
-                                pressedElevation = 0.dp,
-                                focusedElevation = 15.dp,
-                                hoveredElevation = 10.dp
-                            ),
-                            shape = RoundedCornerShape(10.dp)
+                            modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10.dp))
                         ) {
                             Icon(
                                 modifier = Modifier.size(40.dp),
@@ -251,17 +248,11 @@ fun ScreenHome(navController: NavHostController){
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        OutlinedButton(
+                        IconButton(
                             onClick = {
                                 navController.navigate(route = Screens.ScreenIAC.route)
                             },
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 10.dp,
-                                pressedElevation = 0.dp,
-                                focusedElevation = 15.dp,
-                                hoveredElevation = 10.dp
-                            ),
-                            shape = RoundedCornerShape(10.dp)
+                            modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10.dp))
                         ) {
                             Icon(
                                 modifier = Modifier.size(40.dp),
@@ -279,17 +270,11 @@ fun ScreenHome(navController: NavHostController){
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        OutlinedButton(
+                        IconButton(
                             onClick = {
                                 navController.navigate(route = Screens.ScreenINFO.route)
                             },
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 10.dp,
-                                pressedElevation = 0.dp,
-                                focusedElevation = 15.dp,
-                                hoveredElevation = 10.dp
-                            ),
-                            shape = RoundedCornerShape(10.dp)
+                            modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10.dp))
                         ) {
                             Icon(
                                 modifier = Modifier.size(40.dp),
@@ -306,17 +291,11 @@ fun ScreenHome(navController: NavHostController){
                     }
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        OutlinedButton(
+                        IconButton(
                             onClick = {
                                 navController.navigate(route = Screens.ScreenConfig.route)
                             },
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 10.dp,
-                                pressedElevation = 0.dp,
-                                focusedElevation = 15.dp,
-                                hoveredElevation = 10.dp
-                            ),
-                            shape = RoundedCornerShape(10.dp)
+                            modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10.dp))
                         ) {
                             Icon(
                                 modifier = Modifier.size(40.dp),
