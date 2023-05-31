@@ -1,14 +1,10 @@
-package com.example.massacorporal
+package com.example.massacorporal.screens
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -30,20 +26,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.R
 
 import com.example.massacorporal.navigation.Screens
-import com.example.massacorporal.ui.theme.AzulNeve
+import com.example.massacorporal.screens.components.Anuncio
+import com.example.massacorporal.screens.components.BarraNavegacaoPadrao
 import com.example.massacorporal.util.DataStoreUtil
 import com.example.massacorporal.viewmodel.ThemeViewModel
 import kotlinx.coroutines.launch
@@ -70,23 +63,10 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(text = "Configurações")},
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screens.ScreenHome.route){
-                                popUpTo(Screens.ScreenHome.route){
-                                    inclusive = true
-                                }
-                            }
-                        }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
-                    }
-                },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = Color.Transparent
-            ))
+            BarraNavegacaoPadrao(
+                titulo = "Configurações",
+                navController = navController
+            )
         },
         content = {
                 paddingValues -> Column(
@@ -209,16 +189,7 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
 
                         }
 
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.Bottom)
-                    {
-                        Text(text = "Anúncio aqui")
-                    }
+                        Anuncio()
                 }
         }
     )

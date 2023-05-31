@@ -1,4 +1,4 @@
-package com.example.massacorporal
+package com.example.massacorporal.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -36,10 +36,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.massacorporal.CurrencyAmountInputVisualTransformation
 import com.example.massacorporal.components.Datas
 import com.example.massacorporal.components.Estados
 import com.example.massacorporal.components.Indices
 import com.example.massacorporal.navigation.Screens
+import com.example.massacorporal.screens.components.Anuncio
+import com.example.massacorporal.screens.components.BarraNavegacaoPadrao
 import com.example.massacorporal.ui.theme.Laranja
 import kotlinx.coroutines.launch
 import java.time.ZoneId
@@ -79,23 +82,10 @@ fun ScreenIAC(navController: NavHostController){
 
     Scaffold(
         topBar = {
-                 TopAppBar(
-                     title = { Text(text = "Calcule seu IAC")},
-                 navigationIcon = {
-                     IconButton(
-                         onClick = {
-                             navController.navigate(Screens.ScreenHome.route){
-                                 popUpTo(Screens.ScreenHome.route){
-                                     inclusive = true
-                                 }
-                             }
-                         }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
-                     }
-                 },
-                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                     containerColor = Color.Transparent
-                 ))
+            BarraNavegacaoPadrao(
+                titulo = "Calcule seu IAC",
+                navController = navController
+            )
         },
         content = {
             paddingValues -> Column(
@@ -356,14 +346,7 @@ fun ScreenIAC(navController: NavHostController){
 
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.Bottom)
-                    {
-                        Text(text = "Anúncio aqui")
-                    }
+                        Anuncio()
 
                 }
         }

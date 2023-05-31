@@ -7,6 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.massacorporal.*
+import com.example.massacorporal.screens.ScreenConfig
+import com.example.massacorporal.screens.home.ScreenHome
+import com.example.massacorporal.screens.ScreenIAC
+import com.example.massacorporal.screens.info.ScreenINFO
+import com.example.massacorporal.screens.ScreenImc
+import com.example.massacorporal.screens.ScreenSplash
 import com.example.massacorporal.util.DataStoreUtil
 import com.example.massacorporal.viewmodel.ThemeViewModel
 
@@ -41,11 +47,17 @@ fun SetupNavGraph(
         }
 
         composable(route = Screens.ScreenINFO.route){
-            ScreenINFO(navController = navController)
+            ScreenINFO(
+                navController = navController,
+                model = themeViewModel
+            )
         }
 
         composable(route = Screens.ScreenConfig.route){
-            ScreenConfig(navController = navController, dataStore = dataStoreUtil ,themeViewModel = themeViewModel)
+            ScreenConfig(navController = navController,
+                dataStore = dataStoreUtil,
+                themeViewModel = themeViewModel
+            )
         }
 
 

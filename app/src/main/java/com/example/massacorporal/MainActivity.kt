@@ -37,31 +37,6 @@ class MainActivity : ComponentActivity() {
 
     lateinit var navController: NavHostController
 
-    /*private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
-
-    private var shouldShowCamera: MutableState<Boolean> = mutableStateOf(false)
-
-
-    private fun handleImageCapture(uri: Uri) {
-        Log.i("kilo", "Image captured: $uri")
-        shouldShowCamera.value = false
-    }
-
-    private fun getOutputDirectory(): File {
-        val mediaDir = externalMediaDirs.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
-        }
-
-        return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
-    }
-
-*/
 
     private val themeViewModel: ThemeViewModel by viewModels()
     private lateinit var dataStoreUtil: DataStoreUtil
@@ -96,53 +71,13 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     navController = rememberNavController()
-
-                    //ScreenImc()
-                   // ScreenHome()
-                  //  ScreenINFO()
                     
-                    SetupNavGraph(navController = navController, dataStoreUtil = dataStoreUtil, themeViewModel = themeViewModel)
+                    SetupNavGraph(
+                        navController = navController,
+                        dataStoreUtil = dataStoreUtil,
+                        themeViewModel = themeViewModel)
                 }
             }
         }
-
-  //      requestCameraPermission()
     }
-
-
-/*
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Log.i("kilo", "Permission granted")
-        } else {
-            Log.i("kilo", "Permission denied")
-        }
-    }
-
-
-    private fun requestCameraPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                Log.i("kilo", "Permission previously granted")
-            }
-
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.CAMERA
-            ) -> Log.i("kilo", "Show camera permissions dialog")
-
-            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-    }
-*/
-
-
-
-
 }

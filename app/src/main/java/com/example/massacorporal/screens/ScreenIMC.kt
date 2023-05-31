@@ -1,4 +1,4 @@
-package com.example.massacorporal
+package com.example.massacorporal.screens
 
 
 
@@ -45,7 +45,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.input.ImeAction
@@ -57,9 +56,12 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
+import com.example.massacorporal.CurrencyAmountInputVisualTransformation
 import com.example.massacorporal.components.*
 
 import com.example.massacorporal.navigation.Screens
+import com.example.massacorporal.screens.components.Anuncio
+import com.example.massacorporal.screens.components.BarraNavegacaoPadrao
 import com.example.massacorporal.ui.theme.Laranja
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -111,6 +113,8 @@ fun ScreenImc(navController: NavHostController){
 
     Scaffold (
         topBar = {
+
+
             TopAppBar(
                 title = { Text(text = "Calcule seu IMC")},
                 navigationIcon = {
@@ -126,8 +130,18 @@ fun ScreenImc(navController: NavHostController){
                     }
                 },
             colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = Color.Transparent
-            ))
+                containerColor = Color.Transparent)
+            )
+
+            BarraNavegacaoPadrao(
+                titulo = "Calcule seu IMC",
+                navController = navController
+            )
+
+
+
+
+
         }
     ) { paddingValues ->
         Column(
@@ -325,16 +339,7 @@ fun ScreenImc(navController: NavHostController){
 
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            )
-            {
-                Text(text = "Anúncio aqui")
-            }
+                Anuncio()
 
         }
     }
