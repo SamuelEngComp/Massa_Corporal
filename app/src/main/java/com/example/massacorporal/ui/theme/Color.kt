@@ -12,4 +12,12 @@ val BrancoNeve = Color(0xFFDEDEDE)
 val AzulNeve = Color(0xFF005380) //para o modo LightColorPalette
 val AzulNeveDark = Color(0xFF0194A8) // para o modo darkColorPalette
 
+
+
 val Laranja = Color(0xFFFF5722)
+
+val AzulNormal = Color(0xFF46BDF3)
+
+val Vermelho_1 = Color(0xFFF77369)
+val Vermelho_2 = Color(0xFFFA2D2D)
+val Vermelho_3 = Color(0xFFFF0000)

@@ -2,11 +2,13 @@ package com.example.massacorporal.screens.info.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 import androidx.compose.material3.Card
@@ -43,11 +45,11 @@ fun CardInfo(
             .padding(10.dp)
             .animateContentSize(
                 animationSpec = tween(
-                    durationMillis = 300,
-                    easing = FastOutLinearInEasing
+                    durationMillis = 500,
+                    easing = LinearOutSlowInEasing
                 )
             ),
-        shape = RoundedCornerShape(10.dp),
+        shape = CircleShape,
         onClick = {expanded.value = !expanded.value}
     ){
         Column(modifier = Modifier
@@ -81,7 +83,7 @@ fun LinhaTituloBotao(
 
     Row(verticalAlignment = Alignment.CenterVertically){
         Text(text = tituloCard,
-            modifier = Modifier.weight(6f),
+            modifier = Modifier.weight(6f).padding(20.dp),
             fontWeight = FontWeight.Bold)
         IconButton(
             modifier = Modifier
@@ -104,7 +106,7 @@ fun ExibirTexto(
 ){
     if (expanded.value){
         Text(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(20.dp),
             text = textoFormulaUtilizada,
             style = MaterialTheme.typography.bodyMedium
         )

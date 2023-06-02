@@ -1,9 +1,14 @@
 package com.example.massacorporal.screens.home.components
 
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -29,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.massacorporal.R
 import com.example.massacorporal.navigation.Screens
@@ -78,17 +85,26 @@ fun MenuHome(model: ThemeViewModel, navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(5.dp)
             .wrapContentSize(Alignment.TopEnd)
+            .background(color = MaterialTheme.colorScheme.primary)
     ){
         DropdownMenu(
             expanded = model.expandedMenuHome.value,
             onDismissRequest = {
                 model.expandedMenuHome.value = false
-        }) {
+            },
+            modifier = Modifier.padding(5.dp)
+        ) {
             DropdownMenuItem(
                 text = {
                        Text(text = "Informações")
                        },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.info_24),
+                        contentDescription = "icon info")
+                              },
                 onClick = {
                     model.expandedMenuHome.value = false
                     navController.navigate(Screens.ScreenINFO.route)
@@ -99,10 +115,16 @@ fun MenuHome(model: ThemeViewModel, navController: NavController){
                 text = {
                        Text(text = "Configurações")
                        },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_settings_24),
+                        contentDescription = "icon setting")
+                              },
                 onClick = {
                     model.expandedMenuHome.value = false
                     navController.navigate(Screens.ScreenConfig.route)
-                })
+                }
+            )
 
         }
     }

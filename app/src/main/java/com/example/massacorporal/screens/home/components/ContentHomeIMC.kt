@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.massacorporal.components.Datas
@@ -43,7 +44,7 @@ fun ContentHomeIMC(
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp
             ),
-            shape = RoundedCornerShape(10.dp)
+            shape = CircleShape
         ) {
 
             Row(
@@ -76,18 +77,21 @@ fun ContentHomeValoresIMC(indiceImc: String){
     if (Estados.controleEstadoIMC)
         Text(
             text = " ${Estados.estadoImc}",
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
         )
 
     Text(
         text = indiceImc,
-        style = MaterialTheme.typography.titleSmall,
-        fontWeight = FontWeight.Bold
+        style = MaterialTheme.typography.bodyLarge,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
     )
 
     Text(
         text = " ${Datas.dataIMC} ",
-        style = MaterialTheme.typography.titleSmall
+        style = MaterialTheme.typography.bodySmall,
+        textAlign = TextAlign.Center
     )
 
 }

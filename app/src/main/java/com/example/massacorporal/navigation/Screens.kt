@@ -8,5 +8,6 @@ sealed class Screens(val route: String){
     object ScreenIAC: Screens("iac_screen")
     object ScreenINFO: Screens("info_screen")
     object ScreenConfig: Screens("config_screen")
+    object ScreenRegistrosIMC: Screens("registro_screen_imc")
 
 }
