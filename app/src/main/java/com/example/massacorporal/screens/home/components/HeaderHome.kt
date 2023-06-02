@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun HearderHome(textoBemVindo: String, textoCuidarSaude: String, textoMonitarIndices: String){
+fun HearderHome(textoCuidarSaude: String, textoMonitarIndices: String){
 
     Row(
         modifier = Modifier
@@ -32,24 +32,12 @@ fun HearderHome(textoBemVindo: String, textoCuidarSaude: String, textoMonitarInd
             verticalArrangement = Arrangement.Center
         ) {
 
-            TextoHearderBoasVindas(texto = textoBemVindo)
-
             TextoHeaderSaude(texto = textoCuidarSaude)
 
             TextoHeaderSaude(texto = textoMonitarIndices)
 
         }
     }
-}
-
-@Composable
-fun TextoHearderBoasVindas(texto: String){
-    Text(
-        modifier = Modifier.padding(10.dp),
-        text = texto,
-        fontWeight = FontWeight.Bold,
-        style = MaterialTheme.typography.headlineSmall
-    )
 }
 
 @Composable

@@ -35,7 +35,7 @@ fun SetupNavGraph(
         }
 
         composable(route = Screens.ScreenHome.route){
-            ScreenHome(navController = navController)
+            ScreenHome(navController = navController, model = themeViewModel)
         }
 
         composable(route = Screens.ScreenIAC.route){

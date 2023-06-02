@@ -116,8 +116,9 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                                         Switch(
                                             checked = switchState,
                                             colors = SwitchDefaults.colors(
-                                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                                uncheckedThumbColor = MaterialTheme.colorScheme.primary
+                                                checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                                                uncheckedThumbColor = MaterialTheme.colorScheme.primary,
+                                                uncheckedBorderColor = MaterialTheme.colorScheme.primary
                                             ),
                                             onCheckedChange = {
                                                 switchState = it
