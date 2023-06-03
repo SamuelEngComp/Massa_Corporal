@@ -1,5 +1,6 @@
 package com.example.massacorporal.screens
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.*
@@ -46,11 +47,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, themeViewModel: ThemeViewModel){
 
-    //var temaUsuario by rememberSaveable { mutableStateOf("padrao") }
-
     var switchState by rememberSaveable {themeViewModel.isDarkThemeEnabled }
     val coroutineScope = rememberCoroutineScope()
-    //var radioValor by rememberSaveable { mutableStateOf(false) }
 
     val termosDeUsoUrl = "https://sites.google.com/view/massacorporaldev"
     val intentTermoDeUso = Intent(Intent.ACTION_VIEW, Uri.parse(termosDeUsoUrl))
@@ -133,61 +131,21 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
                             }
 
 
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(5.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
+                            ButtomTermos(
+                                contexto = context,
+                                intent = intentTermoDeUso,
+                                textoBotao = "Termos de Uso",
+                                icon = R.drawable.open_new,
+                                descricao = "Icone Termos de uso"
+                            )
 
-                                Button(
-                                    onClick = {
-                                              context.startActivity(intentTermoDeUso)
-                                              },
-                                    shape = CircleShape,
-                                    modifier = Modifier.fillMaxWidth(0.80f),
-                                    elevation = ButtonDefaults.buttonElevation(
-                                        defaultElevation = 10.dp,
-                                        pressedElevation = 0.dp
-                                    )
-                                ) {
-                                    Text(text = "Termos de Uso")
-                                    Spacer(modifier = Modifier.width(10.dp))
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.open_new),
-                                        contentDescription = "Icone Termos de uso",
-                                        modifier = Modifier.padding(start = 5.dp))
-                                }
-
-                            }
-
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(5.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center)
-                            {
-                                Button(
-                                    onClick = {
-                                              context.startActivity(intentPoliticaPrivacidade)
-                                              },
-                                    modifier = Modifier.fillMaxWidth(0.80f),
-                                    elevation = ButtonDefaults.buttonElevation(
-                                        defaultElevation = 10.dp,
-                                        pressedElevation = 0.dp
-                                    ),
-                                    shape = CircleShape
-                                ) {
-                                    Text(text = "Política de Privacidade")
-                                    Spacer(modifier = Modifier.width(10.dp))
-                                    Icon(painter = painterResource(id = R.drawable.open_new),
-                                        contentDescription = "Icone politica privacidade",
-                                        modifier = Modifier.padding(start = 5.dp))
-                                }
-                            }
-
+                            ButtomTermos(
+                                contexto = context,
+                                intent = intentPoliticaPrivacidade,
+                                textoBotao = "Política de Privacidade",
+                                icon = R.drawable.open_new,
+                                descricao = "Icone politica privacidade"
+                            )
                         }
 
                         Anuncio()
@@ -205,3 +163,41 @@ fun ScreenConfig(navController: NavHostController, dataStore: DataStoreUtil, the
      */
 
 }
+
+@Composable
+fun ButtomTermos(contexto: Context, intent: Intent, textoBotao: String, icon: Int, descricao: String){
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+
+        Button(
+            onClick = {
+                contexto.startActivity(intent)
+            },
+            shape = CircleShape,
+            modifier = Modifier.fillMaxWidth(0.80f),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 0.dp
+            )
+        ) {
+            Text(text = textoBotao)
+            Spacer(modifier = Modifier.width(10.dp))
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = descricao,
+                modifier = Modifier.padding(start = 5.dp))
+        }
+
+    }
+
+}
+
+
+
+

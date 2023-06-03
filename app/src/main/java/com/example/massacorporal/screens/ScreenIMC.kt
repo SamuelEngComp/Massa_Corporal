@@ -1,7 +1,6 @@
 package com.example.massacorporal.screens
 
 
-
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
@@ -73,7 +72,7 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenImc(navController: NavHostController){
+fun ScreenImc(navController: NavHostController) {
 
     /**
      * Variaveis utilizadas para capturar o valor digitado nos campos
@@ -103,45 +102,19 @@ fun ScreenImc(navController: NavHostController){
      * Animacao para preencher o grafico com base no valor do IMC
      */
     val animatedProgress = animateFloatAsState(
-        targetValue =  resultadoIMC,
+        targetValue = resultadoIMC,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
     ).value
 
     val scope = rememberCoroutineScope()
 
 
-
-    Scaffold (
+    Scaffold(
         topBar = {
-
-
-            TopAppBar(
-                title = { Text(text = "Calcule seu IMC")},
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screens.ScreenHome.route){
-                                popUpTo(Screens.ScreenHome.route){
-                                    inclusive = true
-                                }
-                            }
-                        }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "voltar")
-                    }
-                },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = Color.Transparent)
-            )
-
             BarraNavegacaoPadrao(
                 titulo = "Calcule seu IMC",
                 navController = navController
             )
-
-
-
-
-
         }
     ) { paddingValues ->
         Column(
@@ -250,11 +223,12 @@ fun ScreenImc(navController: NavHostController){
                             Datas.dataIMC = timestampIMC
                             Estados.controleEstadoIMC = true
 
-                            navController.navigate(Screens.ScreenHome.route){
-                                popUpTo(Screens.ScreenHome.route){
+                            navController.navigate(Screens.ScreenHome.route) {
+                                popUpTo(Screens.ScreenHome.route) {
                                     inclusive = true
                                 }
-                            } },
+                            }
+                        },
                         enabled = resultadoIMC != 0.0f,
                         shape = CircleShape
                     ) {
@@ -265,7 +239,7 @@ fun ScreenImc(navController: NavHostController){
                 if (alturaPessoa.isNotEmpty() && pesoPessoa.isNotEmpty()) {
                     alturaDaPessoa = alturaPessoa.toFloat() / 100
                     pesoDaPessoa = pesoPessoa.toFloat() / 100
-                }else{
+                } else {
                     resultadoIMC = 0.0f
                 }
 
@@ -276,45 +250,102 @@ fun ScreenImc(navController: NavHostController){
                     smallText = CalculoImc(resultadoIMC = animatedProgress),
                     backgroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorStrokeWidth = 70f,
-                    foregroundIndicatorColor = when(animatedProgress){
-                        in 0.1f .. 18.49f -> { MaterialTheme.colorScheme.primary } //magresa
-                        in 18.50f .. 24.99f -> { MaterialTheme.colorScheme.primary } //normal
-                        in 25.0f .. 29.99f -> { Laranja } //sobrepeso
-                        in 30f .. 34.99f -> { Color.Red } //obesidade I
-                        in 35f .. 39.99f -> { Color.Red } //obesidade II
-                        in 40f .. 1000.0f -> { Color.Red } //obesidade III
+                    foregroundIndicatorColor = when (animatedProgress) {
+                        in 0.1f..18.49f -> {
+                            MaterialTheme.colorScheme.primary
+                        } //magresa
+                        in 18.50f..24.99f -> {
+                            MaterialTheme.colorScheme.primary
+                        } //normal
+                        in 25.0f..29.99f -> {
+                            Laranja
+                        } //sobrepeso
+                        in 30f..34.99f -> {
+                            Color.Red
+                        } //obesidade I
+                        in 35f..39.99f -> {
+                            Color.Red
+                        } //obesidade II
+                        in 40f..1000.0f -> {
+                            Color.Red
+                        } //obesidade III
                         else -> MaterialTheme.colorScheme.primary
                     }
                 )
 
-                Row(modifier = Modifier.fillMaxWidth(0.90f),
+                Row(
+                    modifier = Modifier.fillMaxWidth(0.90f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center) {
-                    when(CalculoImc(resultadoIMC = animatedProgress)){
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    when (CalculoImc(resultadoIMC = animatedProgress)) {
                         "Abaixo do Peso" -> {
-                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa) * 21.7f)} Kg")
+                            CustomTextAlerta(
+                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                        "${
+                                            String.format(
+                                                "%.2f",
+                                                (alturaDaPessoa * alturaDaPessoa) * 21.7f
+                                            )
+                                        } Kg"
+                            )
                         }
+
                         "Normal" -> {
                             CustomTextAlerta(texto = "Continue assim, mantenha esse peso")
                         }
+
                         "Sobrepeso" -> {
-                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
+                            CustomTextAlerta(
+                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                        "${
+                                            String.format(
+                                                "%.2f",
+                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
+                                            )
+                                        } Kg"
+                            )
                         }
+
                         "Obesidade Grau I" -> {
-                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
+                            CustomTextAlerta(
+                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                        "${
+                                            String.format(
+                                                "%.2f",
+                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
+                                            )
+                                        } Kg"
+                            )
                         }
+
                         "Obesidade Grau II" -> {
-                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
+                            CustomTextAlerta(
+                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                        "${
+                                            String.format(
+                                                "%.2f",
+                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
+                                            )
+                                        } Kg"
+                            )
                         }
+
                         "Obesidade Grau III" -> {
-                            CustomTextAlerta(texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                    "${String.format("%.2f",(alturaDaPessoa*alturaDaPessoa)*24.0f)} Kg")
+                            CustomTextAlerta(
+                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
+                                        "${
+                                            String.format(
+                                                "%.2f",
+                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
+                                            )
+                                        } Kg"
+                            )
                         }
-                        else -> {""}
+
+                        else -> {
+                            ""
+                        }
                     }
                 }
 
@@ -339,14 +370,14 @@ fun ScreenImc(navController: NavHostController){
 
             }
 
-                Anuncio()
+            Anuncio()
 
         }
     }
 }
 
 @Composable
-fun CustomTextAlerta(texto: String){
+fun CustomTextAlerta(texto: String) {
 
     Text(
         text = texto,
@@ -356,38 +387,49 @@ fun CustomTextAlerta(texto: String){
 }
 
 
-
 fun CalculoImc(resultadoIMC: Float): String {
 
     val resultadoPossiveis = listOf(
-        NivelGorduraIMC.ABAIXO_DO_PESO.nivelGordura, "Normal", "Sobrepeso", "Obesidade Grau I", "Obesidade Grau II", "Obesidade Grau III")
+        NivelGorduraIMC.ABAIXO_DO_PESO.nivelGordura,
+        "Normal",
+        "Sobrepeso",
+        "Obesidade Grau I",
+        "Obesidade Grau II",
+        "Obesidade Grau III"
+    )
     var resultado = ""
 
-    when(resultadoIMC){
-        in 0.1f .. 18.49f -> {
+    when (resultadoIMC) {
+        in 0.1f..18.49f -> {
             resultado = resultadoPossiveis[0]
             Estados.estadoImc = resultado
         }
-        in 18.50f .. 24.99f -> {
+
+        in 18.50f..24.99f -> {
             resultado = resultadoPossiveis[1]
             Estados.estadoImc = resultado
         }
-        in 25.0f .. 29.99f -> {
+
+        in 25.0f..29.99f -> {
             resultado = resultadoPossiveis[2]
             Estados.estadoImc = resultado
         }
-        in 30.0f .. 34.99f -> {
+
+        in 30.0f..34.99f -> {
             resultado = resultadoPossiveis[3]
             Estados.estadoImc = resultado
         }
-        in 35.0f .. 39.99f -> {
+
+        in 35.0f..39.99f -> {
             resultado = resultadoPossiveis[4]
             Estados.estadoImc = resultado
         }
-        in 40.0f .. 1000.5f -> {
+
+        in 40.0f..1000.5f -> {
             resultado = resultadoPossiveis[5]
             Estados.estadoImc = resultado
         }
+
         else -> " "
     }
 
@@ -395,88 +437,13 @@ fun CalculoImc(resultadoIMC: Float): String {
 }
 
 
-fun ResultadoDoImc(altura: Float, peso: Float): Float{
+fun ResultadoDoImc(altura: Float, peso: Float): Float {
 
     val resultado = peso / Math.pow(altura.toDouble(), 2.0)
 
     return resultado.toFloat()
 
 }
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-@Composable
-fun LoadingAnimation3(
-    circleColor: Color = MaterialTheme.colorScheme.primary,//Color(0xFF35898F),
-    circleSize: Dp = 36.dp,
-    animationDelay: Int = 400,
-    initialAlpha: Float = 0.3f
-) {
-
-    // 3 circles
-    val circles = listOf(
-        remember {
-            Animatable(initialValue = initialAlpha)
-        },
-        remember {
-            Animatable(initialValue = initialAlpha)
-        },
-        remember {
-            Animatable(initialValue = initialAlpha)
-        }
-    )
-
-    circles.forEachIndexed { index, animatable ->
-
-        LaunchedEffect(Unit) {
-
-            // Use coroutine delay to sync animations
-            delay(timeMillis = (animationDelay / circles.size).toLong() * index)
-
-            animatable.animateTo(
-                targetValue = 1f,
-                animationSpec = infiniteRepeatable(
-                    animation = tween(
-                        durationMillis = animationDelay
-                    ),
-                    repeatMode = RepeatMode.Reverse
-                )
-            )
-        }
-    }
-
-    // container for circles
-    Row(
-        modifier = Modifier
-        //.border(width = 2.dp, color = Color.Magenta)
-    ) {
-
-        // adding each circle
-        circles.forEachIndexed { index, animatable ->
-
-            // gap between the circles
-            if (index != 0) {
-                Spacer(modifier = Modifier.width(width = 6.dp))
-            }
-
-            Box(
-                modifier = Modifier
-                    .size(size = circleSize)
-                    .clip(shape = CircleShape)
-                    .background(
-                        color = circleColor
-                            .copy(alpha = animatable.value)
-                    )
-            ) {
-            }
-        }
-    }
-}
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
