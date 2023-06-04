@@ -1,11 +1,10 @@
-package com.example.massacorporal.screens
+package com.example.massacorporal.screens.imc
 
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -14,27 +13,20 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -44,6 +36,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.input.ImeAction
@@ -62,7 +55,7 @@ import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.screens.components.Anuncio
 import com.example.massacorporal.screens.components.BarraNavegacaoPadrao
 import com.example.massacorporal.ui.theme.Laranja
-import kotlinx.coroutines.delay
+import com.example.massacorporal.viewmodel.ThemeViewModel
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -72,22 +65,7 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenImc(navController: NavHostController) {
-
-    /**
-     * Variaveis utilizadas para capturar o valor digitado nos campos
-     * altura e peso
-     */
-    var alturaPessoa by rememberSaveable { mutableStateOf("") }
-    var pesoPessoa by rememberSaveable { mutableStateOf("") }
-
-
-    var alturaDaPessoa = 0.0f
-    var pesoDaPessoa = 0.0f
-
-
-    var resultadoIMC by rememberSaveable { mutableStateOf(0.0f) }
-
+fun ScreenImc(navController: NavHostController, model: ThemeViewModel) {
 
     /**
      * Variavel criada para salvar a hora que o usuario clicou no botao salvar
@@ -102,12 +80,9 @@ fun ScreenImc(navController: NavHostController) {
      * Animacao para preencher o grafico com base no valor do IMC
      */
     val animatedProgress = animateFloatAsState(
-        targetValue = resultadoIMC,
+        targetValue = model.resultadoIMC.value,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
     ).value
-
-    val scope = rememberCoroutineScope()
-
 
     Scaffold(
         topBar = {
@@ -132,61 +107,18 @@ fun ScreenImc(navController: NavHostController) {
                 verticalArrangement = Arrangement.Top
             ) {
 
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth(0.80f)
-                        .padding(10.dp),
-                    value = alturaPessoa,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        cursorColor = MaterialTheme.colorScheme.primary,
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        focusedLabelColor = MaterialTheme.colorScheme.primary
-                    ),
-                    onValueChange = {
-                        if (it.length <= 3 && !it.startsWith("0")) {
-                            alturaPessoa = it
-                        }
-                    },
-                    label = { Text(text = "Altura") },
-                    singleLine = true,
-                    maxLines = 1,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.NumberPassword,
-                        imeAction = ImeAction.Next
-                    ),
-                    shape = CircleShape,
-                    trailingIcon = {
-                        Text(text = "m ")
-                    },
-                    visualTransformation = CurrencyAmountInputVisualTransformation()
+                CampoEntradaAltura(
+                    valor = model.alturaDaPessoa.value,
+                    onChangeValor = { model.onChangeAltura(valor = it) },
+                    label = "Altura",
+                    trailingIcon = "m "
                 )
 
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth(0.80f)
-                        .padding(10.dp),
-                    value = pesoPessoa,
-                    onValueChange = {
-                        if (it.length <= 5 && !it.startsWith("0")) {
-                            pesoPessoa = it
-                        }
-                    },
-                    label = { Text(text = "Peso") },
-                    singleLine = true,
-                    maxLines = 1,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.NumberPassword,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { controllerTeclado?.hide() }
-                    ),
-                    shape = CircleShape,
-                    trailingIcon = {
-                        Text(text = "Kg ")
-                    },
-                    visualTransformation = CurrencyAmountInputVisualTransformation()
+                CampoEntradaPeso(
+                    valor = model.pesoDaPessoa.value,
+                    label = "Peso",
+                    onChangeValor = {model.onChangePeso(valor = it)},
+                    trailingIcon = "Kg "
                 )
 
                 Row(
@@ -197,29 +129,21 @@ fun ScreenImc(navController: NavHostController) {
                 ) {
                     Button(
                         onClick = {
+                            model.ResultadoDoIMC(
+                                altura = model.alturaDaPessoa.value.toFloat()/100,
+                                peso = model.pesoDaPessoa.value.toFloat()/100
+                            )
                             controllerTeclado?.hide()
-                            scope.launch {
-                                resultadoIMC = ResultadoDoImc(alturaDaPessoa, pesoDaPessoa)
-                            }
                         },
                         shape = CircleShape,
-                        enabled = if (
-                            (alturaPessoa.isEmpty() || alturaPessoa.equals("0.00") ||
-                                    alturaPessoa.equals("")) ||
-                            (pesoPessoa.isEmpty() || pesoPessoa.equals("") ||
-                                    pesoPessoa.equals("0.00"))
-                        ) {
-                            false
-                        } else {
-                            true
-                        }
+                        enabled = model.showCalcular()
                     ) {
                         Text(text = " Calcular ")
                     }
 
                     Button(
                         onClick = {
-                            Indices.imc = String.format("%.2f", resultadoIMC)
+                            Indices.imc = String.format("%.2f", model.resultadoIMC.value)//resultadoIMC)
                             Datas.dataIMC = timestampIMC
                             Estados.controleEstadoIMC = true
 
@@ -228,49 +152,28 @@ fun ScreenImc(navController: NavHostController) {
                                     inclusive = true
                                 }
                             }
+
+                            //reset nos valores
+                            model.alturaDaPessoa.value = ""
+                            model.pesoDaPessoa.value = ""
+                            model.resultadoIMC.value = 0.0f
+
                         },
-                        enabled = resultadoIMC != 0.0f,
+                        enabled = model.showSalvar(),//resultadoIMC != 0.0f,
                         shape = CircleShape
                     ) {
                         Text(text = " Salvar ")
                     }
                 }
 
-                if (alturaPessoa.isNotEmpty() && pesoPessoa.isNotEmpty()) {
-                    alturaDaPessoa = alturaPessoa.toFloat() / 100
-                    pesoDaPessoa = pesoPessoa.toFloat() / 100
-                } else {
-                    resultadoIMC = 0.0f
-                }
-
                 CustomComponent(
                     indicatorValue = animatedProgress.toInt(),
                     maxIndicatorValue = 41,
                     bigTextSuffix = "IMC",
-                    smallText = CalculoImc(resultadoIMC = animatedProgress),
+                    smallText = model.CalculoImcStatus(resultadoIMC = animatedProgress),//CalculoImc(resultadoIMC = animatedProgress),
                     backgroundIndicatorStrokeWidth = 70f,
                     foregroundIndicatorStrokeWidth = 70f,
-                    foregroundIndicatorColor = when (animatedProgress) {
-                        in 0.1f..18.49f -> {
-                            MaterialTheme.colorScheme.primary
-                        } //magresa
-                        in 18.50f..24.99f -> {
-                            MaterialTheme.colorScheme.primary
-                        } //normal
-                        in 25.0f..29.99f -> {
-                            Laranja
-                        } //sobrepeso
-                        in 30f..34.99f -> {
-                            Color.Red
-                        } //obesidade I
-                        in 35f..39.99f -> {
-                            Color.Red
-                        } //obesidade II
-                        in 40f..1000.0f -> {
-                            Color.Red
-                        } //obesidade III
-                        else -> MaterialTheme.colorScheme.primary
-                    }
+                    foregroundIndicatorColor = model.foregroundIndicatorColorImc(valor = animatedProgress)
                 )
 
                 Row(
@@ -278,96 +181,15 @@ fun ScreenImc(navController: NavHostController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    when (CalculoImc(resultadoIMC = animatedProgress)) {
-                        "Abaixo do Peso" -> {
-                            CustomTextAlerta(
-                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                        "${
-                                            String.format(
-                                                "%.2f",
-                                                (alturaDaPessoa * alturaDaPessoa) * 21.7f
-                                            )
-                                        } Kg"
+
+                    if (model.showSalvar())
+                        CustomTextAlerta(
+                            texto = model.mensagemFinal(
+                                resultadoIMC = animatedProgress,
+                                altura = model.alturaDaPessoa.value.toFloat()/100
                             )
-                        }
-
-                        "Normal" -> {
-                            CustomTextAlerta(texto = "Continue assim, mantenha esse peso")
-                        }
-
-                        "Sobrepeso" -> {
-                            CustomTextAlerta(
-                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                        "${
-                                            String.format(
-                                                "%.2f",
-                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
-                                            )
-                                        } Kg"
-                            )
-                        }
-
-                        "Obesidade Grau I" -> {
-                            CustomTextAlerta(
-                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                        "${
-                                            String.format(
-                                                "%.2f",
-                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
-                                            )
-                                        } Kg"
-                            )
-                        }
-
-                        "Obesidade Grau II" -> {
-                            CustomTextAlerta(
-                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                        "${
-                                            String.format(
-                                                "%.2f",
-                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
-                                            )
-                                        } Kg"
-                            )
-                        }
-
-                        "Obesidade Grau III" -> {
-                            CustomTextAlerta(
-                                texto = "Para ficar Normal é necessário que seu peso seja no mínimo: " +
-                                        "${
-                                            String.format(
-                                                "%.2f",
-                                                (alturaDaPessoa * alturaDaPessoa) * 24.0f
-                                            )
-                                        } Kg"
-                            )
-                        }
-
-                        else -> {
-                            ""
-                        }
-                    }
+                        )
                 }
-
-
-                /**
-                 *
-                 *
-
-                Graus de obesidade: quais são?
-
-                IMC abaixo de 18,5: abaixo do peso.
-                IMC entre 18,5 e 24,9: peso normal.
-                IMC entre 25 e 29,9: sobrepeso.
-                IMC entre 30 e 34,9: obesidade grau I.
-                IMC entre 35 e 39,9: obesidade grau II.
-                IMC acima de 40: obesidade grau III.
-
-                 *
-                 *
-                 */
-
-
             }
 
             Anuncio()
@@ -378,71 +200,10 @@ fun ScreenImc(navController: NavHostController) {
 
 @Composable
 fun CustomTextAlerta(texto: String) {
-
     Text(
         text = texto,
         style = MaterialTheme.typography.titleSmall
     )
-
-}
-
-
-fun CalculoImc(resultadoIMC: Float): String {
-
-    val resultadoPossiveis = listOf(
-        NivelGorduraIMC.ABAIXO_DO_PESO.nivelGordura,
-        "Normal",
-        "Sobrepeso",
-        "Obesidade Grau I",
-        "Obesidade Grau II",
-        "Obesidade Grau III"
-    )
-    var resultado = ""
-
-    when (resultadoIMC) {
-        in 0.1f..18.49f -> {
-            resultado = resultadoPossiveis[0]
-            Estados.estadoImc = resultado
-        }
-
-        in 18.50f..24.99f -> {
-            resultado = resultadoPossiveis[1]
-            Estados.estadoImc = resultado
-        }
-
-        in 25.0f..29.99f -> {
-            resultado = resultadoPossiveis[2]
-            Estados.estadoImc = resultado
-        }
-
-        in 30.0f..34.99f -> {
-            resultado = resultadoPossiveis[3]
-            Estados.estadoImc = resultado
-        }
-
-        in 35.0f..39.99f -> {
-            resultado = resultadoPossiveis[4]
-            Estados.estadoImc = resultado
-        }
-
-        in 40.0f..1000.5f -> {
-            resultado = resultadoPossiveis[5]
-            Estados.estadoImc = resultado
-        }
-
-        else -> " "
-    }
-
-    return resultado
-}
-
-
-fun ResultadoDoImc(altura: Float, peso: Float): Float {
-
-    val resultado = peso / Math.pow(altura.toDouble(), 2.0)
-
-    return resultado.toFloat()
-
 }
 
 
@@ -608,6 +369,72 @@ fun EmbeddedElements(
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CampoEntradaAltura(
+    valor: String,
+    onChangeValor: (String) -> Unit,
+    label: String,
+    trailingIcon: String
+){
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth(0.80f)
+            .padding(10.dp),
+        value = valor,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary
+        ),
+        onValueChange = {
+            onChangeValor(it)
+        },
+        label = { Text(text = label) },
+        singleLine = true,
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.NumberPassword,
+            imeAction = ImeAction.Next
+        ),
+        shape = CircleShape,
+        trailingIcon = { Text(text = trailingIcon) },
+        visualTransformation = CurrencyAmountInputVisualTransformation()
+    )
+}
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@Composable
+fun CampoEntradaPeso(
+    valor: String,
+    onChangeValor: (String) -> Unit,
+    label: String,
+    trailingIcon: String
+){
+    val controllerTeclado = LocalSoftwareKeyboardController.current
 
-
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth(0.80f)
+            .padding(10.dp),
+        value = valor,
+        onValueChange = {
+            onChangeValor(it)
+        },
+        label = { Text(text = label) },
+        singleLine = true,
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.NumberPassword,
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { controllerTeclado?.hide() }
+        ),
+        shape = CircleShape,
+        trailingIcon = {
+            Text(text = trailingIcon)
+        },
+        visualTransformation = CurrencyAmountInputVisualTransformation()
+    )
+}

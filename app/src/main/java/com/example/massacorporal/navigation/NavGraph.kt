@@ -11,7 +11,7 @@ import com.example.massacorporal.screens.ScreenConfig
 import com.example.massacorporal.screens.home.ScreenHome
 import com.example.massacorporal.screens.ScreenIAC
 import com.example.massacorporal.screens.info.ScreenINFO
-import com.example.massacorporal.screens.ScreenImc
+import com.example.massacorporal.screens.imc.ScreenImc
 import com.example.massacorporal.screens.ScreenSplash
 
 import com.example.massacorporal.screens.registros.ScreenRegistrosIMC
@@ -45,7 +45,10 @@ fun SetupNavGraph(
         }
 
         composable(route = Screens.ScreenIMC.route){
-            ScreenImc(navController = navController)
+            ScreenImc(
+                navController = navController,
+                model = themeViewModel
+            )
         }
 
         composable(route = Screens.ScreenINFO.route){

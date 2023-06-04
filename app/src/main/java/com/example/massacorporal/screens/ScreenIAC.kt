@@ -9,12 +9,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ProgressIndicatorDefaults
@@ -23,8 +19,6 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -43,6 +37,8 @@ import com.example.massacorporal.components.Indices
 import com.example.massacorporal.navigation.Screens
 import com.example.massacorporal.screens.components.Anuncio
 import com.example.massacorporal.screens.components.BarraNavegacaoPadrao
+import com.example.massacorporal.screens.imc.CustomComponent
+import com.example.massacorporal.screens.imc.CustomTextAlerta
 import com.example.massacorporal.ui.theme.Laranja
 import kotlinx.coroutines.launch
 import java.time.ZoneId
